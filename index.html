@@ -1,0 +1,1125 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PantherConnect</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: Instagram-style shell. Sidebar (desktop) or bottom nav (mobile), one centered content column. Purple primary, gold accent. */
+:root{--bg:#F5F4F8;--surface:#FFFFFF;--surface-2:#F0EEF5;--line:#E3DFEC;--fg:#26232B;--fg-2:#5A5666;--fg-3:#7C7789;
+--brand:#5B2C8C;--brand-strong:#44206B;--brand-text:#5B2C8C;--brand-soft:#EEE7F8;--on-brand:#FFFFFF;
+--gold:#F0A800;--gold-soft:#FFF3D1;--gold-ink:#6B4A00;--on-gold:#2A1D00;
+--good:#17724F;--good-soft:#DDF3EA;--warn:#A14A06;--warn-soft:#FDEBD3;--bad:#B42318;--bad-soft:#FBE3E0;
+--shadow:0 1px 2px rgba(38,35,43,.06),0 10px 28px rgba(38,35,43,.07);
+--fd:'Montserrat',system-ui,sans-serif;--fb:'Source Sans 3',system-ui,-apple-system,'Segoe UI',sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14111A;--surface:#1E1A27;--surface-2:#272233;--line:#37324A;--fg:#F1EEF7;--fg-2:#BDB7CC;--fg-3:#938DA4;
+--brand:#7B48C4;--brand-strong:#9467DA;--brand-text:#C0A3F2;--brand-soft:#2D2342;--gold-soft:#3A2E0A;--gold-ink:#F6C453;
+--good:#4FD1A1;--good-soft:#12342A;--warn:#F6A04D;--warn-soft:#3A2410;--bad:#FF8A80;--bad-soft:#3D1A18;--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14111A;--surface:#1E1A27;--surface-2:#272233;--line:#37324A;--fg:#F1EEF7;--fg-2:#BDB7CC;--fg-3:#938DA4;
+--brand:#7B48C4;--brand-strong:#9467DA;--brand-text:#C0A3F2;--brand-soft:#2D2342;--gold-soft:#3A2E0A;--gold-ink:#F6C453;
+--good:#4FD1A1;--good-soft:#12342A;--warn:#F6A04D;--warn-soft:#3A2410;--bad:#FF8A80;--bad-soft:#3D1A18;--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:16px/1.45 var(--fb);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--fd);margin:0;line-height:1.2;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:var(--fg)}
+a{color:var(--brand-text)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid transparent;background:var(--surface-2);font-weight:700;font-size:15px;white-space:nowrap}
+.btn:hover{filter:brightness(.97)}
+.btn-primary{background:var(--brand);color:var(--on-brand)}
+.btn-primary:hover{background:var(--brand-strong);filter:none}
+.btn-gold{background:var(--gold);color:var(--on-gold)}
+.btn-line{background:transparent;border-color:var(--line);color:var(--fg)}
+.btn-line.on{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-text)}
+.btn-sm{min-height:36px;padding:0 14px;font-size:14px}
+.btn-block{width:100%}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.icon-btn{display:inline-grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;position:relative}
+.icon-btn:hover{background:var(--surface-2)}
+.badge-dot{position:absolute;top:4px;right:3px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--gold);color:var(--on-gold);font:700 11px/18px var(--fb);text-align:center}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14px}
+.chip.on{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;background:var(--brand-soft);color:var(--brand-text);font-weight:700;font-size:12.5px}
+.pill.gold{background:var(--gold-soft);color:var(--gold-ink)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.plain{background:var(--surface-2);color:var(--fg-2)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px}
+.avatar{display:inline-grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,var(--brand),#8D55CC);color:#fff;font:700 14px var(--fd);overflow:hidden;flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar.ring,.orglogo.ring{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--gold)}
+.orglogo{display:inline-grid;place-items:center;border-radius:50%;color:#fff;font:700 13px var(--fd);flex:none}
+/* shell */
+.app{min-height:100vh}
+.side{display:none}
+.main{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar-in{display:flex;align-items:center;gap:8px;height:60px;max-width:960px;margin:0 auto;padding:0 max(12px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.topbar .grow{flex:1;min-width:0}
+.logo{display:inline-flex;align-items:center;gap:9px;font:800 19px var(--fd);color:var(--fg);text-decoration:none;border:0;background:none;padding:0}
+.logo b{color:var(--brand-text);font-weight:800}
+.logo .mark{width:32px;height:32px}
+.tsearch{display:none}
+.acct-chip{display:none;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--gold-soft);color:var(--gold-ink);font:700 13px var(--fb);border:1px solid var(--gold)}
+.page{width:100%;max-width:640px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-right,0px)) 32px max(16px,env(safe-area-inset-left,0px))}
+.page.wide{max-width:960px}.page.mid{max-width:760px}
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(5,1fr);align-items:center}
+.bnav button{display:grid;justify-items:center;gap:2px;border:0;background:none;padding:6px 0;font:600 11px var(--fb);color:var(--fg-2);min-height:48px}
+.bnav button.on{color:var(--brand-text)}
+.bnav .plus{width:48px;height:48px;border-radius:50%;background:var(--gold);color:var(--on-gold);display:grid;place-items:center;justify-self:center;margin-top:-14px;box-shadow:var(--shadow)}
+.bnav .plus.locked{background:var(--surface-2);color:var(--fg-3)}
+@media(min-width:760px){
+.side{display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;width:76px;z-index:30;background:var(--surface);border-right:1px solid var(--line);padding:18px 10px 16px max(10px,env(safe-area-inset-left,0px));gap:6px}
+.main{margin-left:76px;padding-bottom:40px}
+.bnav{display:none}
+.logo.mobile-only{display:none}
+.tsearch{display:flex;align-items:center;gap:8px;flex:1;max-width:420px;min-height:42px;border-radius:999px;background:var(--surface-2);padding:0 14px;border:1px solid transparent}
+.tsearch input{flex:1;border:0;background:none;outline:none;min-width:0}
+.tsearch:focus-within{border-color:var(--brand)}
+.tsearch-icon{display:none}
+.acct-chip{display:inline-flex}
+}
+@media(min-width:1100px){.side{width:244px;padding:22px 14px 16px max(14px,env(safe-area-inset-left,0px))}.main{margin-left:244px}.side .lbl{display:inline}}
+.side .lbl{display:none}
+.side .logo{margin:0 6px 14px}
+.side .logo span{display:none}
+@media(min-width:1100px){.side .logo span{display:inline}}
+.nav-item{display:flex;align-items:center;gap:14px;min-height:48px;padding:0 13px;border-radius:14px;border:0;background:none;font:600 16px var(--fb);color:var(--fg);text-align:left;position:relative}
+.nav-item:hover{background:var(--surface-2)}
+.nav-item.on{background:var(--brand-soft);color:var(--brand-text);font-weight:700}
+.nav-item.on::before{content:"";position:absolute;left:-4px;top:12px;bottom:12px;width:4px;border-radius:2px;background:var(--gold)}
+.nav-item .badge-dot{top:6px;left:28px;right:auto}
+.side-foot{margin-top:auto;position:relative}
+.switcher{display:flex;align-items:center;gap:10px;width:100%;padding:8px;border-radius:14px;border:1px solid var(--line);background:var(--surface);text-align:left}
+.switcher .who{display:none;min-width:0;flex:1}
+.switcher .who b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.switcher .who small{color:var(--fg-3);font-size:12px}
+@media(min-width:1100px){.switcher .who{display:block}}
+.menu{position:absolute;bottom:calc(100% + 8px);left:0;width:280px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:8px;z-index:50}
+.menu button{display:flex;align-items:center;gap:10px;width:100%;padding:10px;border:0;background:none;border-radius:12px;text-align:left}
+.menu button:hover{background:var(--surface-2)}
+.menu small{display:block;color:var(--fg-3)}
+</style>
+<style>
+/* feed + cards */
+.greet{padding:4px 2px 14px}
+.greet h1{font-size:24px}
+.greet p{color:var(--fg-2);margin-top:4px}
+.stories{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 14px;scrollbar-width:none}
+.stories::-webkit-scrollbar{display:none}
+.story{display:grid;justify-items:center;gap:6px;border:0;background:none;width:68px;flex:none;font:600 12px var(--fb);color:var(--fg-2)}
+.story span:last-child{max-width:68px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.home-grid{display:block}
+.rail{display:none}
+@media(min-width:1260px){.home-grid{display:grid;grid-template-columns:600px 300px;gap:32px;justify-content:center;max-width:960px;margin:0 auto}.home-grid .page{max-width:none;padding:16px 0 32px}.rail{display:block;padding-top:90px}}
+.post{overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow)}
+.post-h{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.post-h .who{flex:1;min-width:0;text-align:left;border:0;background:none;padding:0}
+.post-h .who b{display:flex;align-items:center;gap:5px;font-size:15px}
+.post-h .who small{display:block;color:var(--fg-3);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.verified{color:var(--brand-text)}
+.media{position:relative;aspect-ratio:5/4;background:var(--surface-2);width:100%;display:block;border:0;padding:0}
+.flyer-svg,.flyer-img{width:100%;height:100%;display:block;object-fit:cover}
+.media .corner{position:absolute;top:12px;left:12px}
+.acts{display:flex;align-items:center;gap:2px;padding:6px 8px 0}
+.act{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;border:0;background:none;border-radius:12px;font:600 14px var(--fb);color:var(--fg)}
+.act:hover{background:var(--surface-2)}
+.act.on{color:var(--brand-text)}
+.act.on.heart{color:#D6336C}
+.act.on svg{animation:pop .35s ease}
+.act.right{margin-left:auto}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.cap{padding:4px 16px 16px;display:grid;gap:10px}
+.cap h3{font-size:18px}
+.cap .desc{color:var(--fg-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.why{font-size:13px;color:var(--brand-text);font-weight:700;display:flex;gap:6px;align-items:center}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--fg-2)}
+.meta span{display:inline-flex;align-items:center;gap:6px}
+.when{font-style:normal;font-weight:700;color:var(--fg-3)}
+.when.soon{color:var(--warn)}
+.more{display:grid;place-items:center;padding:8px 0 24px}
+/* explore */
+.searchbox{display:flex;align-items:center;gap:10px;min-height:50px;padding:0 8px 0 16px;border-radius:999px;background:var(--surface);border:1.5px solid var(--line)}
+.searchbox:focus-within{border-color:var(--brand)}
+.searchbox input{flex:1;border:0;background:none;outline:none;min-width:0;font-size:16px}
+.rowscroll{display:flex;gap:8px;overflow-x:auto;padding:12px 0 4px;scrollbar-width:none}
+.rowscroll::-webkit-scrollbar{display:none}
+.rowscroll .chip{flex:none}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.fsel{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:.06em}
+.fsel select,.field input,.field select,.field textarea{min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);padding:0 12px;text-transform:none;letter-spacing:0;font-weight:400;font-size:16px;width:100%}
+.field textarea{padding:10px 12px;min-height:110px;resize:vertical}
+.field{display:grid;gap:6px;font-weight:700;font-size:14px}
+.field .hint{font-weight:400;color:var(--fg-3);font-size:13px}
+.field .err{color:var(--bad);font-weight:600;font-size:13px}
+.field.bad input,.field.bad select,.field.bad textarea{border-color:var(--bad)}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:700px){.tiles{grid-template-columns:repeat(3,1fr);gap:14px}}
+.tile{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;cursor:pointer;background:var(--surface-2);border:1px solid var(--line)}
+.tile .shade{position:absolute;inset:auto 0 0;padding:34px 12px 11px;background:linear-gradient(transparent,rgba(20,10,35,.88));color:#fff;display:grid;gap:2px}
+.tile .shade b{font:700 14px/1.25 var(--fd);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tile .shade small{font-size:12.5px;opacity:.9}
+.tile .tl{position:absolute;top:8px;left:8px}
+.tile .tr{position:absolute;top:4px;right:4px;display:flex}
+.tile .tr .icon-btn{width:38px;height:38px;color:#fff;background:rgba(20,10,35,.45)}
+.tile .tr .icon-btn.on{background:var(--gold);color:var(--on-gold)}
+.empty{text-align:center;padding:44px 20px;color:var(--fg-2);display:grid;gap:12px;justify-items:center}
+.empty h3{color:var(--fg);font-size:18px}
+/* detail */
+.back{display:inline-flex;align-items:center;gap:6px;border:0;background:none;font-weight:700;color:var(--brand-text);min-height:44px;padding:0}
+.hero{border-radius:20px;overflow:hidden;aspect-ratio:16/10;background:var(--surface-2)}
+.d-title{font-size:26px;margin:14px 0 8px}
+.d-acts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.facts div{background:var(--surface);padding:12px 14px}
+.facts small{display:block;color:var(--fg-3);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sec{margin-top:22px}
+.sec h2{font-size:18px;margin-bottom:8px}
+.sec ul{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--fg-2)}
+.note{display:flex;gap:10px;padding:12px 14px;border-radius:14px;background:var(--gold-soft);color:var(--gold-ink);font-size:14px;margin-top:18px}
+.linkbox{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:var(--surface-2);word-break:break-all;font-weight:600}
+/* saved */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:12px 0}
+.srow{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:12px;margin-bottom:12px;align-items:start}
+.srow.fresh{box-shadow:0 0 0 3px var(--gold)}
+.srow .thumb{width:96px;height:96px;border-radius:14px;overflow:hidden;background:var(--surface-2)}
+.srow h3{font-size:16px;margin:2px 0 6px;text-align:left;border:0;background:none;padding:0;cursor:pointer;color:var(--fg)}
+.srow .chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.srow .bot{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:0 12px;min-height:36px;font:600 13px var(--fb)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--brand);color:var(--on-brand)}
+</style>
+<style>
+/* calendar, notifications, profile, create, modals, auth */
+.cal-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:860px){.cal-grid{grid-template-columns:1.25fr 1fr}}
+.cal{padding:14px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-h h2{font-size:18px}
+.dow,.days{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
+.dow span{font-size:12px;font-weight:700;color:var(--fg-3);padding:6px 0}
+.day{aspect-ratio:1/1;min-height:44px;border:0;background:none;border-radius:12px;display:grid;align-content:center;justify-items:center;gap:3px;font-weight:600;position:relative}
+.day.out{color:var(--fg-3);opacity:.55}
+.day.today{box-shadow:inset 0 0 0 2px var(--gold)}
+.day.sel{background:var(--brand);color:var(--on-brand)}
+.dots{display:flex;gap:3px;height:6px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+.dots i.d{background:var(--gold)}.dots i.r{background:var(--fg-3)}
+.day.sel .dots i{background:#fff}.day.sel .dots i.d{background:var(--gold)}
+.legend{display:flex;gap:14px;font-size:13px;color:var(--fg-2);margin-top:8px;flex-wrap:wrap}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--brand)}
+.legend i.d{background:var(--gold)}.legend i.r{background:var(--fg-3)}
+.panel{padding:14px 16px;margin-bottom:14px}
+.panel h2{font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ev{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.ev:first-of-type{border-top:0}
+.ev.fresh{background:var(--gold-soft);border-radius:12px;padding:10px;margin:2px -4px}
+.ev .dt{flex:none;width:48px;text-align:center;border-radius:12px;background:var(--brand-soft);color:var(--brand-text);padding:5px 0;font:700 18px/1 var(--fd)}
+.ev .dt small{display:block;font:700 10px var(--fb);text-transform:uppercase;letter-spacing:.08em}
+.ev.deadline .dt{background:var(--gold-soft);color:var(--gold-ink)}
+.ev .tx{flex:1;min-width:0}
+.ev .tx b{display:block;font-size:15px}
+.ev .tx small{color:var(--fg-3)}
+.rem{display:flex;gap:10px;padding:10px 12px;border-radius:12px;background:var(--gold-soft);color:var(--gold-ink);margin-bottom:8px;font-weight:600;font-size:14.5px;width:100%;text-align:left;border:0}
+/* notifications */
+.nrow{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:14px;border:0;border-top:1px solid var(--line);background:var(--surface)}
+.nrow:first-child{border-top:0}
+.nrow:hover{background:var(--surface-2)}
+.nrow .nic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand-text);flex:none}
+.nrow .tx{flex:1;min-width:0}
+.nrow small{color:var(--fg-3)}
+.unread{width:10px;height:10px;border-radius:50%;background:var(--gold);flex:none;margin-top:6px}
+.list{overflow:hidden}
+.sec-t{font:700 13px var(--fb);color:var(--fg-3);text-transform:uppercase;letter-spacing:.08em;margin:18px 4px 8px}
+/* profile */
+.prof-h{display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:6px 0 16px}
+.prof-h h1{font-size:24px}
+.prof-h .sub{color:var(--fg-2);margin-top:2px}
+.stats{display:flex;gap:22px;margin-top:10px;color:var(--fg-2);font-size:14px}
+.stats b{color:var(--fg);font-size:17px;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+/* create */
+.steps{display:flex;gap:10px;align-items:center;margin-bottom:16px;font-weight:700;font-size:14px;color:var(--fg-3)}
+.steps .s{display:inline-flex;align-items:center;gap:8px}
+.steps .n{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-size:13px}
+.steps .s.on{color:var(--fg)}.steps .s.on .n{background:var(--brand);color:#fff}
+.steps .bar{flex:1;height:2px;background:var(--line);max-width:60px}
+.form{display:grid;gap:16px}
+.two{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:600px){.two{grid-template-columns:1fr 1fr}}
+.drop{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center;padding:12px;border:2px dashed var(--line);border-radius:16px}
+.drop .pv{aspect-ratio:5/4;border-radius:12px;overflow:hidden;background:var(--surface-2);display:grid;place-items:center;color:var(--fg-3)}
+.drop .btns{display:flex;gap:8px;flex-wrap:wrap}
+.group{display:grid;gap:10px}
+.group h3{font-size:15px;display:flex;justify-content:space-between;align-items:center}
+.group h3 button{border:0;background:none;color:var(--brand-text);font-weight:700;font-size:13px}
+.summary{display:flex;gap:12px;padding:14px 16px;border-radius:16px;background:var(--gold-soft);color:var(--gold-ink);font-weight:600}
+.summary small{display:block;font-weight:400;margin-top:4px}
+.lockbox{display:grid;gap:14px;justify-items:center;text-align:center;padding:40px 22px}
+.lockbox .big{width:64px;height:64px;border-radius:50%;background:var(--brand-soft);color:var(--brand-text);display:grid;place-items:center}
+.reach{display:grid;gap:4px;text-align:center;padding:18px}
+.reach .num{font:800 44px var(--fd);color:var(--brand-text)}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.mini b{display:block;font:800 22px var(--fd)}
+.mini small{color:var(--fg-3)}
+.okmark{width:72px;height:72px;border-radius:50%;background:var(--good-soft);color:var(--good);display:grid;place-items:center;margin:0 auto}
+/* modal + toast + demo */
+.scrim{position:fixed;inset:0;z-index:100;background:rgba(20,10,35,.55);display:flex;align-items:flex-end;justify-content:center}
+@media(min-width:700px){.scrim{align-items:center}}
+.sheet{width:100%;max-width:480px;max-height:92vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet.wide{max-width:600px}
+@media(min-width:700px){.sheet{border-radius:22px}}
+.sheet-h{display:flex;align-items:center;justify-content:space-between;padding:14px 12px 0 20px}
+.sheet-h h2{font-size:18px}
+.sheet-b{padding:12px 20px 20px;display:grid;gap:14px}
+.person{display:flex;align-items:center;gap:12px}
+.person .nm{flex:1;font-weight:600}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:200;background:#26232B;color:#fff;border-radius:14px;padding:12px 16px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow);max-width:min(92vw,460px);animation:rise .25s ease;font-weight:600}
+.toast button{border:0;background:none;color:var(--gold);font-weight:700;padding:0}
+@media(min-width:760px){.toast{bottom:32px}}
+@keyframes rise{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+.demo{position:fixed;z-index:150;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+@media(min-width:760px){.demo{bottom:calc(20px + env(safe-area-inset-bottom,0px))}}
+.demo-btn{display:inline-flex;gap:8px;align-items:center;min-height:42px;padding:0 14px;border-radius:999px;border:0;background:#26232B;color:#fff;font-weight:700;font-size:14px;box-shadow:var(--shadow)}
+.demo .menu{bottom:calc(100% + 8px);right:0;left:auto;width:300px}
+.demo .menu .n{width:24px;height:24px;border-radius:50%;background:var(--brand-soft);color:var(--brand-text);display:grid;place-items:center;font:700 12px var(--fb);flex:none}
+.demo .menu hr{border:0;border-top:1px solid var(--line);margin:6px 0}
+/* welcome + onboarding */
+.auth{min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));background:radial-gradient(1200px 600px at 85% 0%,#7A44C2 0,transparent 60%),linear-gradient(160deg,#2D1250,#4B2379 60%,#5B2C8C);color:#fff;display:grid;align-items:center;padding:28px max(20px,env(safe-area-inset-right,0px)) 28px max(20px,env(safe-area-inset-left,0px))}
+.auth-in{max-width:1040px;width:100%;margin:0 auto;display:grid;gap:36px;align-items:center}
+@media(min-width:900px){.auth-in{grid-template-columns:1.1fr .9fr}}
+.auth h1{font-size:clamp(30px,5vw,46px);margin:18px 0 12px}
+.auth h1 em{font-style:normal;color:var(--gold)}
+.auth p.lead{font-size:18px;color:#E6DCF5;max-width:520px}
+.auth .btns{display:grid;gap:12px;margin-top:26px;max-width:380px}
+.auth .btn-gold{min-height:52px;font-size:16px}
+.auth .btn-ghost{background:rgba(255,255,255,.12);color:#fff;min-height:52px;font-size:16px;border-color:rgba(255,255,255,.3)}
+.auth small{color:#CDBFE6;display:block;margin-top:14px}
+.collage{position:relative;height:400px;display:none}
+@media(min-width:900px){.collage{display:block}}
+.col-card{position:absolute;width:250px;aspect-ratio:5/4;border-radius:20px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.35);border:3px solid rgba(255,255,255,.85)}
+.ob{min-height:100vh;background:var(--bg)}
+.ob-in{max-width:760px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 120px max(16px,env(safe-area-inset-left,0px));display:grid;gap:18px}
+.ob h1{font-size:28px}
+.ob .card{padding:18px;display:grid;gap:14px}
+.ob h2{font-size:18px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.ccard{display:grid;gap:8px;justify-items:start;padding:14px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);text-align:left;font-weight:700}
+.ccard .ci{width:36px;height:36px;border-radius:12px;background:var(--brand-soft);color:var(--brand-text);display:grid;place-items:center}
+.ccard.on{border-color:var(--brand);background:var(--brand-soft)}
+.ccard.on .ci{background:var(--brand);color:#fff}
+.ob-foot{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:20}
+.ob-foot .in{max-width:760px;margin:0 auto;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.ready{min-height:calc(100vh - env(safe-area-inset-top,0px));display:grid;place-items:center;text-align:center;padding:24px;background:var(--bg)}
+.ready .okmark{background:var(--gold-soft);color:var(--gold-ink);width:92px;height:92px;margin-bottom:18px}
+.ready h1{font-size:30px;margin-bottom:8px}
+.ready p{color:var(--fg-2);margin-bottom:22px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/htm@3.1.1/dist/htm.js"></script>
+<script>
+(function(){
+if(!window.React||!window.ReactDOM||!window.htm){document.getElementById('root').innerHTML='<p style="padding:24px;font-family:sans-serif">PantherConnect could not load its libraries. Check your connection and reload.</p>';return;}
+const {useState,useEffect,useRef,useMemo,useContext,createContext,useCallback}=React;
+const Frag=React.Fragment;
+const html=htm.bind(React.createElement);
+const Ctx=createContext(null);
+const cx=(...a)=>a.filter(Boolean).join(' ');
+
+/* ---------- dates (demo "today" is pinned) ---------- */
+const TODAY=new Date(2026,10,22,12);
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONL=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const pd=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12);};
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const dayDiff=s=>Math.round((pd(s)-TODAY)/86400000);
+const fmt=s=>{const d=pd(s);return MON[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();};
+const fmtLong=s=>{const d=pd(s);return DOW[d.getDay()]+', '+MON[d.getMonth()]+' '+d.getDate();};
+const rel=n=>n===0?'Today':n===1?'Tomorrow':n<0?'Passed':n<14?'In '+n+' days':n<60?'In '+Math.round(n/7)+' weeks':'In '+Math.round(n/30)+' months';
+
+/* ---------- taxonomy ---------- */
+const CATS=['Internships','Full-Time Jobs','Networking','Campus Events','Research','Workshops','Scholarships','Professional Development'];
+const CAT_ICON={'Internships':'briefcase','Full-Time Jobs':'building','Networking':'users','Campus Events':'star','Research':'flask','Workshops':'book','Scholarships':'award','Professional Development':'trend'};
+const CAT_LONG={'Full-Time Jobs':'Full-Time Employment'};
+const INTERESTS=['Full-time employment','Internships','Biomedical Engineering','Mechanical Engineering','Networking','Professional development','Research','Career fairs'];
+const CAREERS=[['Engineering','tool'],['Biomedical Engineering','activity'],['Mechanical Engineering','cog'],['Healthcare Technology','heart'],['Consulting','briefcase']];
+const MAJORS=['Mechanical Engineering','Biomedical Engineering','Computer Science','Electrical Engineering','Biology','Finance'];
+const CLASSES=['Freshman','Sophomore','Junior','Senior','Graduate Student'];
+const AUD_MAJ=['Mechanical Engineering','Biomedical Engineering','Computer Science','Electrical Engineering','Biology','Other'];
+const AUD_INT=['Networking','Professional Development','Research','Workshops','Career Opportunities'];
+const AUD_MAP={'Networking':['Networking'],'Professional Development':['Professional development'],'Research':['Research'],'Workshops':['Professional development'],'Career Opportunities':['Full-time employment','Career fairs']};
+const LOCS=['On campus','Houston area','Virtual','Elsewhere in Texas'];
+
+const ORGS={
+gcts:{name:'Gulf Coast Thermal Systems',ini:'GT',color:'#1F6F8B',kind:'Employer'},
+psu:{name:'PVAMU Career Services',ini:'CS',color:'#5B2C8C',kind:'Campus office',ver:1},
+meridian:{name:'Meridian Health Systems',ini:'MH',color:'#0E7C66',kind:'Employer'},
+lonestar:{name:'Lonestar Devices',ini:'LD',color:'#B8470C',kind:'Employer'},
+coe:{name:'PVAMU College of Engineering',ini:'CE',color:'#3E1C63',kind:'Campus office',ver:1},
+bmilab:{name:'PVAMU Biomedical Imaging Lab',ini:'BI',color:'#2563A8',kind:'Research lab',ver:1},
+cs:{name:'PVAMU Computer Science Dept.',ini:'CD',color:'#475569',kind:'Department',ver:1},
+bme:{name:'Biomedical Engineering Student Org',ini:'BE',color:'#7A3FB0',kind:'Student organization',ver:1},
+alumni:{name:'PVAMU Alumni Association',ini:'AA',color:'#8A6A12',kind:'Alumni',ver:1},
+brazos:{name:'Brazos Valley Energy Co.',ini:'BV',color:'#0F766E',kind:'Employer'},
+apex:{name:'Apex Aerospace Components',ini:'AC',color:'#334155',kind:'Employer'},
+houmed:{name:'Houston Med Devices',ini:'HM',color:'#B4235A',kind:'Employer'},
+bayou:{name:'Bayou Capital Group',ini:'BC',color:'#14532D',kind:'Employer'},
+schol:{name:'PVAMU Office of Scholarships',ini:'OS',color:'#7C3A12',kind:'Campus office',ver:1},
+sa:{name:'PVAMU Student Activities',ini:'SA',color:'#4C1D95',kind:'Campus office',ver:1},
+grad:{name:'PVAMU Graduate Admissions',ini:'GA',color:'#1D4E89',kind:'Campus office',ver:1},
+txa:{name:'Texas Analytics Group',ini:'TA',color:'#0369A1',kind:'Employer'},
+rr:{name:'Red River Power Controls',ini:'RR',color:'#9A3412',kind:'Employer'},
+chem:{name:'PVAMU Chemistry Club',ini:'CC',color:'#166534',kind:'Student organization'},
+wis:{name:'Women in STEM Collective',ini:'WS',color:'#A21CAF',kind:'Student organization'}
+};
+const T={pg:['#3E1C63','#7A44C2','#F0A800'],teal:['#0B3C49','#14808F','#FFC857'],navy:['#14213D','#2F4B8A','#F0A800'],crim:['#5A1230','#B4235A','#FFD166'],forest:['#0F3D2E','#1B7F5C','#F0A800'],slate:['#1F2937','#475569','#F0A800'],plum:['#2A0F44','#5B2C8C','#F6C453']};
+
+/* ---------- opportunities (all fictional) ---------- */
+const OPPS=[
+{id:'ft-me',org:'gcts',title:'Entry-Level Mechanical Engineer',cat:'Full-Time Jobs',kind:'job',dateKind:'Deadline',date:'2027-03-15',loc:'Houston, TX',locType:'Houston area',level:'New Graduate',comp:'$74,000 to $86,000 (simulated)',
+ short:'Design and test heat-exchange equipment for Gulf Coast energy and manufacturing customers. Full-time, starts summer 2027.',
+ about:'Gulf Coast Thermal Systems designs heat exchangers, process cooling units, and waste-heat recovery systems for customers across Texas. This full-time role sits on the Product Engineering team and includes a structured 12-month onboarding rotation for new graduates.',
+ points:['Build 3D models and drawings for heat-exchanger components','Run thermal and structural analysis and document design decisions','Support prototype builds and testing in the Houston fabrication lab','Work with senior engineers and customers on specifications and revisions'],
+ quals:['B.S. in Mechanical Engineering (expected May 2027 or earlier)','Coursework in thermodynamics, heat transfer, and machine design','Familiarity with SolidWorks or similar CAD','Authorized to work in the United States'],
+ elig:'Seniors and recent graduates · Mechanical Engineering',majors:['Mechanical Engineering'],classes:['Senior','Graduate Student'],tags:['Full-time employment','Mechanical Engineering'],careers:['Engineering','Mechanical Engineering'],
+ link:'careers.gulfcoastthermal.example/apply/entry-mech-eng',motif:'gear',theme:T.pg,flyer:['Entry-Level','Mechanical','Engineer'],kicker:'FULL-TIME · NEW GRAD',posted:1},
+{id:'bme-fair',org:'psu',title:'Biomedical Engineering Career Fair',cat:'Networking',badge:'Career Fair',kind:'event',dateKind:'Event',date:'2026-11-23',time:'10:00 AM – 2:00 PM',loc:'Memorial Student Center, Ballroom',locType:'On campus',level:'In person',
+ short:'18 device, hospital, and research employers meeting BME and ME students for full-time and internship roles.',
+ about:'Meet recruiters from hospital systems, device makers, and research institutes. Employers are hiring for full-time, internship, and co-op roles. Bring printed resumes and dress professionally.',
+ points:['Check-in opens at 9:30 AM; walk-ins welcome','Employer list posted on the registration page','Resume review table run by Career Services','Networking reception at 1:30 PM'],
+ quals:['Open to PVAMU engineering and science students','Bring a current resume (10 copies recommended)','Business professional dress'],
+ elig:'All classifications · Biomedical and Mechanical Engineering',majors:['Biomedical Engineering','Mechanical Engineering','Biology'],classes:['All'],tags:['Career fairs','Biomedical Engineering','Networking'],careers:['Biomedical Engineering','Healthcare Technology'],
+ link:'pvamu-careers.example/fairs/bme',motif:'pulse',theme:T.teal,flyer:['Biomedical','Engineering','Career Fair'],kicker:'CAREER FAIR',posted:6},
+{id:'pd-eng',org:'lonestar',title:'Product Development Engineer — New Graduate',cat:'Full-Time Jobs',kind:'job',dateKind:'Deadline',date:'2027-02-05',loc:'Austin, TX',locType:'Elsewhere in Texas',level:'New Graduate',comp:'$78,000 to $92,000 (simulated)',
+ short:'Take consumer and clinical devices from concept to launch with a small cross-functional team in Austin.',
+ about:'Lonestar Devices builds connected wearables and monitoring devices. New graduates join a product team and own components from early prototype through manufacturing handoff.',
+ points:['Prototype and test mechanical assemblies','Write test plans and analyze results','Coordinate with suppliers and manufacturing partners','Present design reviews to the product team'],
+ quals:['B.S. in Mechanical or Biomedical Engineering','Hands-on prototyping or lab project experience','Clear written and verbal communication'],
+ elig:'Seniors and recent graduates · Mechanical and Biomedical Engineering',majors:['Mechanical Engineering','Biomedical Engineering'],classes:['Senior','Graduate Student'],tags:['Full-time employment','Mechanical Engineering'],careers:['Engineering'],
+ link:'lonestardevices.example/careers/product-dev',motif:'chip',theme:T.crim,flyer:['Product','Development','Engineer'],kicker:'FULL-TIME · NEW GRAD',posted:3},
+{id:'ft-mfg',org:'apex',title:'Manufacturing Engineer I — Rotational Program',cat:'Full-Time Jobs',kind:'job',dateKind:'Deadline',date:'2027-02-26',loc:'Dallas, TX',locType:'Elsewhere in Texas',level:'New Graduate',comp:'$70,000 to $82,000 (simulated)',
+ short:'Rotate through machining, assembly, and quality teams at an aerospace components plant in the first year.',
+ about:'Apex Aerospace Components machines and assembles precision parts. The rotational program places new engineers on three teams in 12 months before a permanent assignment.',
+ points:['Improve process flow and reduce scrap on production lines','Write work instructions and inspection plans','Support root-cause analysis on quality issues'],
+ quals:['B.S. in Mechanical Engineering or related field','Interest in manufacturing and process improvement','Ability to work on a plant floor'],
+ elig:'Seniors and recent graduates · Mechanical Engineering',majors:['Mechanical Engineering'],classes:['Senior','Graduate Student'],tags:['Full-time employment','Mechanical Engineering'],careers:['Engineering'],
+ link:'apexaero.example/careers/mfg-eng-1',motif:'gear',theme:T.slate,flyer:['Manufacturing','Engineer I'],kicker:'FULL-TIME · ROTATIONAL',posted:9},
+{id:'ht-assoc',org:'meridian',title:'Healthcare Technology Associate Program',cat:'Full-Time Jobs',kind:'job',dateKind:'Deadline',date:'2027-01-22',loc:'Houston, TX (hybrid)',locType:'Houston area',level:'New Graduate',comp:'$68,000 to $80,000 (simulated)',
+ short:'Two-year rotational program placing new graduates on clinical device and health-data teams.',
+ about:'Associates rotate through clinical engineering, health informatics, and device support at a regional hospital network, with a mentor from each team.',
+ points:['Support clinical devices and the staff who use them','Help turn hospital data into dashboards for care teams','Join quarterly cohort projects with leaders'],
+ quals:['B.S. in Biomedical Engineering, Biology, or Computer Science','Interest in healthcare technology','Strong communication skills'],
+ elig:'Seniors and recent graduates · BME, Biology, Computer Science',majors:['Biomedical Engineering','Biology','Computer Science'],classes:['Senior','Graduate Student'],tags:['Full-time employment','Biomedical Engineering'],careers:['Healthcare Technology','Biomedical Engineering'],
+ link:'meridianhealth.example/careers/hta-program',motif:'pulse',theme:T.forest,flyer:['Healthcare','Technology','Associate Program'],kicker:'FULL-TIME · ROTATIONAL',posted:2},
+{id:'net-night',org:'coe',title:'Engineering Networking Night',cat:'Networking',kind:'event',dateKind:'Event',date:'2026-12-03',time:'6:00 PM – 8:00 PM',loc:'Engineering Building Atrium',locType:'On campus',level:'In person',
+ short:'Meet working engineers and alumni over dinner. Small tables by discipline, with time for follow-up questions.',
+ about:'Rotating table conversations with engineers from energy, aerospace, and medical device companies. Business casual.',
+ points:['Dinner served at 6:00 PM','Three 20-minute table rotations','Alumni mentor sign-up at the end'],
+ quals:['Open to all engineering students','Bring a resume or LinkedIn QR code'],
+ elig:'All classifications · All engineering majors',majors:['Mechanical Engineering','Biomedical Engineering','Electrical Engineering'],classes:['All'],tags:['Networking','Professional development','Mechanical Engineering'],careers:['Engineering'],
+ link:'pvamu-engineering.example/networking-night',motif:'nodes',theme:T.pg,flyer:['Engineering','Networking','Night'],kicker:'NETWORKING',posted:4},
+{id:'research',org:'bmilab',title:'Undergraduate Research Opportunity',cat:'Research',kind:'research',dateKind:'Deadline',date:'2026-12-11',loc:'Prairie View, TX (on campus)',locType:'On campus',level:'Spring 2027 term',comp:'$1,500 stipend (simulated)',
+ short:'Join a medical-imaging and biomechanics lab as a spring research assistant. About 8 hours a week.',
+ about:'The lab studies how imaging can predict joint injury. Assistants help run experiments and analyze data, and may co-author a poster.',
+ points:['Collect and label imaging data','Help run motion-capture sessions','Present results at the spring research showcase'],
+ quals:['Junior or senior standing','GPA of 3.0 or higher','Experience with MATLAB or Python is a plus'],
+ elig:'Juniors and seniors · BME, ME, Biology, Computer Science',majors:['Biomedical Engineering','Mechanical Engineering','Biology','Computer Science'],classes:['Junior','Senior'],tags:['Research','Biomedical Engineering'],careers:['Biomedical Engineering'],
+ link:'pvamu-research.example/ura/imaging-lab',motif:'helix',theme:T.navy,flyer:['Undergraduate','Research','Opportunity'],kicker:'RESEARCH',posted:8},
+{id:'ai-health',org:'cs',title:'AI in Healthcare Workshop',cat:'Workshops',kind:'event',dateKind:'Event',date:'2026-12-08',time:'5:30 PM – 7:00 PM',loc:'Virtual (Teams)',locType:'Virtual',level:'Virtual',virtual:1,
+ short:'Hands-on intro to how machine learning is used in diagnostics and hospital operations.',
+ about:'A two-part session: a short talk on real clinical uses of AI, then a guided notebook where you train a simple model on sample data.',
+ points:['No coding background required','Bring a laptop','Recording shared after the session'],
+ quals:['Open to all majors','Laptop with a browser'],
+ elig:'All classifications · All majors',majors:['All'],classes:['All'],tags:['Professional development','Biomedical Engineering'],careers:['Healthcare Technology'],
+ link:'pvamu-cs.example/workshops/ai-health',motif:'chip',theme:T.teal,flyer:['AI in','Healthcare','Workshop'],kicker:'WORKSHOP · VIRTUAL',posted:5},
+{id:'bme-meeting',org:'bme',title:'Biomedical Engineering Student Organization Meeting',cat:'Campus Events',kind:'event',dateKind:'Event',date:'2026-12-01',time:'6:00 PM – 7:00 PM',loc:'Engineering Building, Room 118',locType:'On campus',level:'In person',
+ short:'Monthly chapter meeting: spring plans, guest speaker, and officer elections. Pizza provided.',
+ about:'Members and newcomers are welcome. We will announce spring events, collect committee sign-ups, and hear from a BME alumna in clinical research.',
+ points:['Spring calendar preview','Committee sign-ups','Guest speaker Q&A'],
+ quals:['Open to all students'],
+ elig:'All classifications · Open to all majors',majors:['Biomedical Engineering','Mechanical Engineering'],classes:['All'],tags:['Biomedical Engineering','Networking'],careers:['Biomedical Engineering'],
+ link:'pantherconnect.example/register/bme-meeting',motif:'pulse',theme:T.plum,flyer:['BME Student','Org Meeting'],kicker:'CAMPUS EVENT',posted:3},
+{id:'consult',org:'alumni',title:'Consulting Career Panel',cat:'Professional Development',kind:'event',dateKind:'Event',date:'2026-12-10',time:'6:30 PM – 8:00 PM',loc:'Student Center 2nd Floor + Zoom',locType:'On campus',level:'Hybrid',
+ short:'Four PVAMU alumni in consulting share how they got in, what the work is like, and what to do now.',
+ about:'Alumni from technology, operations, and strategy consulting answer student questions. Ideal for engineering and business students exploring the field.',
+ points:['Panel discussion, 45 minutes','Open Q&A','Case-interview resources shared'],
+ quals:['Open to all students','RSVP encouraged'],
+ elig:'All classifications · All majors',majors:['All'],classes:['All'],tags:['Networking','Professional development'],careers:['Consulting'],
+ link:'pvamu-alumni.example/panels/consulting',motif:'bars',theme:T.navy,flyer:['Consulting','Career Panel'],kicker:'CAREER PANEL',posted:6},
+{id:'summer-int',org:'brazos',title:'Summer Engineering Internship',cat:'Internships',kind:'job',dateKind:'Deadline',date:'2026-11-30',loc:'Houston, TX',locType:'Houston area',level:'Internship',comp:'$28 per hour (simulated)',
+ short:'12-week paid internship on field engineering and plant reliability teams. Applications close November 30.',
+ about:'Interns work on a real project with a mentor, then present results to site leadership at the end of summer.',
+ points:['Own a reliability or efficiency project','Shadow field engineers on site visits','Present to site leadership'],
+ quals:['Rising junior or senior in engineering','GPA of 3.0 or higher','Authorized to work in the United States'],
+ elig:'Sophomores to seniors · Mechanical and Electrical Engineering',majors:['Mechanical Engineering','Electrical Engineering'],classes:['Sophomore','Junior','Senior'],tags:['Internships','Mechanical Engineering'],careers:['Engineering'],
+ link:'brazosenergy.example/internships/2027',motif:'gear',theme:T.forest,flyer:['Summer','Engineering','Internship'],kicker:'INTERNSHIP',posted:10},
+{id:'bio-intern',org:'houmed',title:'Biomedical Device Engineering Intern',cat:'Internships',kind:'job',dateKind:'Deadline',date:'2027-01-31',loc:'Houston, TX',locType:'Houston area',level:'Internship',comp:'$26 per hour (simulated)',
+ short:'Support design verification testing for a catheter product line this summer.',
+ about:'Interns join a design assurance team and help write protocols, run bench tests, and summarize results.',
+ points:['Run verification bench tests','Write and review test protocols','Summarize results for the design team'],
+ quals:['BME or ME major, sophomore to senior','Lab coursework or project experience'],
+ elig:'Sophomores to seniors · BME and ME',majors:['Biomedical Engineering','Mechanical Engineering'],classes:['Sophomore','Junior','Senior'],tags:['Internships','Biomedical Engineering'],careers:['Biomedical Engineering'],
+ link:'houstonmeddevices.example/intern',motif:'pulse',theme:T.crim,flyer:['Biomedical','Device Intern'],kicker:'INTERNSHIP',posted:11},
+{id:'fin-int',org:'bayou',title:'Finance Summer Analyst Program',cat:'Internships',kind:'job',dateKind:'Deadline',date:'2027-01-15',loc:'Houston, TX',locType:'Houston area',level:'Internship',comp:'$30 per hour (simulated)',
+ short:'Ten-week analyst internship in corporate finance and investment research.',
+ about:'Analysts support budgeting, reporting, and research for a regional investment group.',
+ points:['Build financial models in Excel','Prepare weekly reports','Present a final project'],
+ quals:['Finance, Accounting, or Economics major','Strong Excel skills'],
+ elig:'Sophomores and juniors · Finance',majors:['Finance'],classes:['Sophomore','Junior'],tags:['Internships'],careers:[],
+ link:'bayoucapital.example/analyst',motif:'bars',theme:T.forest,flyer:['Finance','Summer Analyst'],kicker:'INTERNSHIP',posted:12},
+{id:'scholar',org:'schol',title:'Texas STEM Leaders Scholarship',cat:'Scholarships',kind:'scholarship',dateKind:'Deadline',date:'2027-02-15',loc:'Online application',locType:'Virtual',level:'$5,000 award',virtual:1,
+ short:'Ten $5,000 awards for STEM students with leadership on campus.',
+ about:'Awards go to students who combine strong academics with leadership and service.',
+ points:['Short essay on leadership','One faculty recommendation','Resume'],
+ quals:['STEM major','3.0 GPA or higher','Full-time enrollment'],
+ elig:'All classifications · STEM majors',majors:['All'],classes:['All'],tags:[],careers:[],
+ link:'pvamu-scholarships.example/stem-leaders',motif:'rings',theme:T.pg,flyer:['STEM Leaders','Scholarship'],kicker:'SCHOLARSHIP',posted:14},
+{id:'watch',org:'sa',title:'Homecoming Basketball Watch Party',cat:'Campus Events',kind:'event',dateKind:'Event',date:'2026-12-05',time:'7:00 PM',loc:'Student Center Lounge',locType:'On campus',level:'In person',
+ short:'Catch the game on the big screen with free snacks and giveaways.',
+ about:'Wear purple and gold. Doors open at 6:30 PM.',points:['Free snacks','Giveaways at halftime'],quals:['Open to all students'],
+ elig:'All classifications · All majors',majors:['All'],classes:['All'],tags:[],careers:[],
+ link:'pantherconnect.example/register/watch-party',motif:'rings',theme:T.slate,flyer:['Homecoming','Watch Party'],kicker:'CAMPUS EVENT',posted:2},
+{id:'grad-ws',org:'grad',title:'Graduate School Application Workshop',cat:'Workshops',kind:'event',dateKind:'Event',date:'2026-12-09',time:'4:00 PM – 5:00 PM',loc:'Virtual (Zoom)',locType:'Virtual',level:'Virtual',virtual:1,
+ short:'Statements of purpose, recommendations, and funding, from admissions staff.',
+ about:'A practical walkthrough of a strong graduate application, with time for questions.',points:['Statement of purpose tips','Funding options'],quals:['Open to juniors, seniors, and alumni'],
+ elig:'Juniors and seniors · All majors',majors:['All'],classes:['Junior','Senior'],tags:[],careers:[],
+ link:'pvamu-grad.example/workshop',motif:'cal',theme:T.navy,flyer:['Graduate School','Workshop'],kicker:'WORKSHOP · VIRTUAL',posted:5},
+{id:'data-an',org:'txa',title:'Entry-Level Data Analyst',cat:'Full-Time Jobs',kind:'job',dateKind:'Deadline',date:'2027-02-28',loc:'Dallas, TX',locType:'Elsewhere in Texas',level:'New Graduate',comp:'$66,000 to $78,000 (simulated)',
+ short:'Build dashboards and reports for retail and logistics clients.',
+ about:'Analysts clean data, build dashboards, and present findings to client teams.',points:['Write SQL queries','Build dashboards','Present weekly findings'],quals:['B.S. in Computer Science, MIS, or Statistics','SQL and Python'],
+ elig:'Seniors and recent graduates · Computer Science, MIS',majors:['Computer Science'],classes:['Senior','Graduate Student'],tags:['Full-time employment'],careers:[],
+ link:'texasanalytics.example/careers/analyst',motif:'bars',theme:T.teal,flyer:['Entry-Level','Data Analyst'],kicker:'FULL-TIME · NEW GRAD',posted:6},
+{id:'ee-job',org:'rr',title:'Entry-Level Electrical Controls Engineer',cat:'Full-Time Jobs',kind:'job',dateKind:'Deadline',date:'2027-03-01',loc:'Houston, TX',locType:'Houston area',level:'New Graduate',comp:'$76,000 to $88,000 (simulated)',
+ short:'Design control panels and PLC logic for industrial power systems.',
+ about:'Engineers design, program, and commission control systems for refineries and plants.',points:['Draw schematics','Program PLCs','Support commissioning'],quals:['B.S. in Electrical Engineering','Circuits and controls coursework'],
+ elig:'Seniors and recent graduates · Electrical Engineering',majors:['Electrical Engineering'],classes:['Senior','Graduate Student'],tags:['Full-time employment'],careers:[],
+ link:'redriverpower.example/careers/controls',motif:'chip',theme:T.crim,flyer:['Electrical','Controls Engineer'],kicker:'FULL-TIME · NEW GRAD',posted:7},
+{id:'chem-sym',org:'chem',title:'Chemistry Research Symposium',cat:'Research',kind:'event',dateKind:'Event',date:'2026-12-04',time:'1:00 PM – 4:00 PM',loc:'Science Building Auditorium',locType:'On campus',level:'In person',
+ short:'Student posters and talks from this semester\'s chemistry research.',
+ about:'Undergraduates present their lab work. Judges give awards in three categories.',points:['Poster session','Student talks','Awards'],quals:['Open to all students'],
+ elig:'All classifications · Chemistry and Biology',majors:['All'],classes:['All'],tags:[],careers:[],
+ link:'pantherconnect.example/register/chem-symposium',motif:'helix',theme:T.forest,flyer:['Chemistry','Research','Symposium'],kicker:'RESEARCH',posted:4},
+{id:'wis-ws',org:'wis',title:'Women in STEM Leadership Workshop',cat:'Workshops',kind:'event',dateKind:'Event',date:'2026-12-12',time:'10:00 AM – 12:00 PM',loc:'Student Center, Room 204',locType:'On campus',level:'In person',
+ short:'Leading teams, running meetings, and negotiating, with STEM leaders from industry.',
+ about:'A morning workshop with practice exercises and a mentor networking hour.',points:['Leadership exercises','Mentor networking hour'],quals:['Open to all students'],
+ elig:'All classifications · All majors',majors:['All'],classes:['All'],tags:['Professional development','Networking'],careers:[],
+ link:'pantherconnect.example/register/wis-workshop',motif:'nodes',theme:T.plum,flyer:['Women in STEM','Leadership','Workshop'],kicker:'WORKSHOP',posted:5}
+];
+OPPS.forEach(o=>{o.postedDays=o.posted;o.interest=o.kind==='event';});
+const byId=(list,id)=>list.find(o=>o.id===id);
+const catLong=o=>CAT_LONG[o.cat]||o.cat;
+const eligOf=aud=>(aud.classes.length?aud.classes.join(', ')+' · ':'All classifications · ')+(aud.majors.length?aud.majors.join(', '):'All majors');
+
+/* ---------- ranking, search, audience ---------- */
+const W={'Full-time employment':4,'Mechanical Engineering':3,'Biomedical Engineering':3,'Career fairs':2,'Networking':2,'Professional development':2,'Research':2,'Internships':1};
+function audMatch(a,p){if(!a)return false;
+ const known=['Mechanical Engineering','Biomedical Engineering','Computer Science','Electrical Engineering','Biology'];
+ const m=!a.majors.length||a.majors.includes(p.major)||(a.majors.includes('Other')&&!known.includes(p.major));
+ const c=!a.classes.length||a.classes.includes(p.classif);
+ const i=!a.interests.length||a.interests.some(x=>(AUD_MAP[x]||[]).some(t=>p.interests.includes(t)));
+ return m&&c&&i;}
+function score(o,p){let s=0;
+ o.tags.forEach(t=>{if(p.interests.includes(t))s+=(W[t]||1);});
+ (o.careers||[]).forEach(c=>{if(p.careers.includes(c))s+=1;});
+ if(o.majors.includes(p.major))s+=2;else if(!o.majors.includes('All'))s-=2;
+ s+=o.postedDays<=2?1.5:o.postedDays<=7?0.7:0;
+ if(o.audience&&audMatch(o.audience,p))s+=8;
+ return s;}
+const matchedTags=(o,p)=>o.tags.filter(t=>p.interests.includes(t)).slice(0,3);
+function feedFor(opps,p){return opps.map(o=>({o,s:score(o,p)})).filter(x=>x.s>=3).sort((a,b)=>b.s-a.s||pd(a.o.date)-pd(b.o.date)).map(x=>x.o);}
+function hay(o){return [o.title,ORGS[o.org].name,o.cat,catLong(o),o.badge||'',o.short,o.about,o.majors.join(' '),o.tags.join(' '),o.loc,o.level||''].join(' ').toLowerCase();}
+function searchScore(o,q){const toks=q.toLowerCase().split(/\s+/).filter(Boolean);if(!toks.length)return 1;
+ const h=hay(o),t=o.title.toLowerCase(),c=(catLong(o)+' '+o.cat).toLowerCase();let s=0;
+ for(const k of toks){if(!h.includes(k))return 0;s+=t.includes(k)?3:1;if(c.includes(k))s+=3;}return s;}
+function runSearch(opps,E){const lim={'Next 7 days':[0,7],'Next 30 days':[0,30],'Next 3 months':[0,92],'Later':[93,9999]}[E.deadline];
+ return opps.map(o=>({o,s:searchScore(o,E.q)})).filter(({o,s})=>{if(!s)return false;
+  if(E.cat!=='All'&&o.cat!==E.cat)return false;
+  if(E.major!=='Any'&&!o.majors.includes(E.major)&&!o.majors.includes('All'))return false;
+  if(E.interest!=='Any'&&!o.tags.includes(E.interest))return false;
+  if(E.loc!=='Any'&&o.locType!==E.loc)return false;
+  if(lim){const d=dayDiff(o.date);if(d<lim[0]||d>lim[1])return false;}return true;})
+ .sort((a,b)=>E.q?(b.s-a.s||pd(a.o.date)-pd(b.o.date)):0).map(x=>x.o);}
+const joinAnd=a=>a.length<3?a.join(' and '):a.slice(0,-1).join(', ')+', and '+a[a.length-1];
+function audSummary(a,kind){const maj=a.majors.length?joinAnd(a.majors)+' students':'students of any major';
+ return 'This '+kind+' will be recommended to '+maj+(a.classes.length?' ('+joinAnd(a.classes.map(c=>c.toLowerCase()))+')':'')+(a.interests.length?' interested in '+joinAnd(a.interests.map(x=>x.toLowerCase()))+'.':'.');}
+const POP={'Mechanical Engineering':310,'Biomedical Engineering':180,'Computer Science':520,'Electrical Engineering':260,'Biology':410,'Other':900};
+const SHARE={'Freshman':.24,'Sophomore':.22,'Junior':.22,'Senior':.21,'Graduate Student':.11};
+function reach(a){const mp=a.majors.length?a.majors.reduce((s,m)=>s+POP[m],0):Object.values(POP).reduce((s,v)=>s+v,0);
+ const cs=a.classes.length?a.classes.reduce((s,c)=>s+SHARE[c],0):1;const f=a.interests.length?Math.min(.85,.3+.17*a.interests.length):1;return Math.max(1,Math.round(mp*cs*f));}
+const wrapLines=(t,max=15)=>{const words=t.split(' ');const L=[];let cur='';for(const w of words){if(cur&&(cur+' '+w).length>max){L.push(cur);cur=w;}else cur=(cur?cur+' ':'')+w;}if(cur)L.push(cur);while(L.length>3){const x=L.pop();L[L.length-1]+=' '+x;}return L;};
+function draftToOpp(d,id){
+ const tags=[];d.interests.forEach(i=>(AUD_MAP[i]||[]).forEach(t=>{if(!tags.includes(t))tags.push(t);}));
+ ['Mechanical Engineering','Biomedical Engineering'].forEach(m=>{if(d.majors.includes(m)&&!tags.includes(m))tags.push(m);});
+ const l=(d.loc||'').toLowerCase();const virtual=/virtual|zoom|teams|online/.test(l);
+ const locType=virtual?'Virtual':(/room|hall|center|centre|campus|building|ballroom|lab|atrium|lounge/.test(l)?'On campus':'Houston area');
+ const aud={majors:d.majors.slice(),classes:d.classes.slice(),interests:d.interests.slice()};
+ const majors=(d.majors.length&&!d.majors.includes('Other'))?d.majors.slice():['All'];
+ const title=d.title||'Your event title';
+ return {id,org:'bme',title,cat:d.cat,kind:'event',dateKind:'Event',date:d.date||'2026-12-02',time:d.time||'',loc:d.loc||'Location to be announced',locType,virtual:virtual?1:0,level:virtual?'Virtual':'In person',
+  short:(d.desc||'Add a description so students know what to expect.').slice(0,160),about:d.desc||'No description yet.',
+  points:['When: '+fmtLong(d.date||'2026-12-02')+(d.time?', '+d.time:''),'Where: '+(d.loc||'To be announced')],quals:['Audience: '+eligOf(aud)],
+  elig:eligOf(aud),majors,classes:d.classes.length?d.classes.slice():['All'],tags,careers:[],link:d.link||'pantherconnect.example/register',
+  motif:'nodes',theme:T.pg,flyer:wrapLines(title),kicker:d.cat.toUpperCase(),posted:0,postedDays:0,interest:true,audience:aud,
+  flyerSrc:d.flyer&&d.flyer.kind==='upload'?d.flyer.src:null};}
+const blankDraft=()=>({step:1,flyer:null,title:'',desc:'',cat:'Professional Development',date:'',time:'',loc:'',link:'',majors:[],classes:[],interests:[],errors:{}});
+const SAMPLE={step:1,flyer:{kind:'demo',name:'Resume-Interview-Lab-Flyer.png'},title:'Engineering Resume and Interview Lab',desc:'Bring your resume and practice your interview pitch with recruiters and recent BME and ME alumni. Small groups, live feedback, and a free headshot station. Pizza provided.',cat:'Professional Development',date:'2026-12-02',time:'6:00 PM – 7:30 PM',loc:'Student Center, Room 214',link:'https://pantherconnect.example/register/resume-interview-lab',majors:[],classes:[],interests:[],errors:{}};
+
+/* ---------- icons ---------- */
+const ICONS={
+home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+compass:'<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
+bookmark:'<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+bell:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+plus:'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>',
+plusc:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+repeat:'<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+send:'<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
+heart:'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+pin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+check:'<polyline points="20 6 9 17 4 12"/>',
+x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+left:'<polyline points="15 18 9 12 15 6"/>',right:'<polyline points="9 18 15 12 9 6"/>',down:'<polyline points="6 9 12 15 18 9"/>',
+link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+briefcase:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+building:'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/>',
+users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+award:'<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
+book:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+flask:'<path d="M9 3h6"/><path d="M10 3v6L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7.5 15h9"/>',
+star:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+trend:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+megaphone:'<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>',
+upload:'<polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>',
+image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/>',
+lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
+eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
+copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+arrow:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+ext:'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
+layers:'<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+reset:'<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>',
+info:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+tool:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+activity:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+cog:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M1 12h4M19 12h4M4.2 19.8L7 17M17 7l2.8-2.8"/>',
+swap:'<polyline points="17 1 21 5 17 9"/><line x1="3" y1="5" x2="21" y2="5"/><polyline points="7 23 3 19 7 15"/><line x1="21" y1="19" x2="3" y2="19"/>'
+};
+function Icon({name,size=20,fill}){return html`<svg className="ic" width=${size} height=${size} viewBox="0 0 24 24" fill=${fill?'currentColor':'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" dangerouslySetInnerHTML=${{__html:ICONS[name]||''}}/>`;}
+function Mark({size=32}){return html`<svg className="mark" width=${size} height=${size} viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#5B2C8C"/><g stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none"><path d="M9 21l7-9 7 9"/><path d="M9 21h14"/></g><circle cx="16" cy="9" r="3" fill="#F0A800"/><circle cx="9" cy="21" r="2.5" fill="#fff"/><circle cx="23" cy="21" r="2.5" fill="#fff"/></svg>`;}
+function Logo({onClick,mobile}){return html`<button className=${cx('logo',mobile&&'mobile-only')} onClick=${onClick} aria-label="PantherConnect home"><${Mark}/><span>Panther<b>Connect</b></span></button>`;}
+function Avatar({src,size=36,ring}){return html`<span className=${cx('avatar',ring&&'ring')} style=${{width:size,height:size,fontSize:Math.round(size*.38)}}>${src?html`<img src=${src} alt=""/>`:'AT'}</span>`;}
+function OrgLogo({org,size=40,ring}){const o=ORGS[org];return html`<span className=${cx('orglogo',ring&&'ring')} style=${{width:size,height:size,background:o.color,fontSize:Math.round(size*.34)}} aria-hidden="true">${o.ini}</span>`;}
+
+/* ---------- flyer art (original designs) ---------- */
+const gearPts=(cx0,cy,r1,r2,n)=>{const p=[];for(let i=0;i<n*4;i++){const a=(i/(n*4))*Math.PI*2;const r=(i%4<2)?r2:r1;p.push((cx0+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1));}return p.join(' ');};
+function Motif({k,ac}){const w='rgba(255,255,255,.24)';
+ if(k==='gear')return html`<g fill="none" strokeWidth="6" strokeLinejoin="round"><polygon points=${gearPts(590,390,120,155,10)} stroke=${w}/><circle cx="590" cy="390" r="48" stroke=${w}/><polygon points=${gearPts(450,530,56,78,7)} stroke=${ac} opacity=".85"/><circle cx="450" cy="530" r="20" stroke=${ac} opacity=".85"/></g>`;
+ if(k==='pulse')return html`<g fill="none" strokeLinecap="round" strokeLinejoin="round"><circle cx="640" cy="340" r="120" stroke=${w} strokeWidth="5"/><circle cx="640" cy="340" r="76" stroke=${w} strokeWidth="5"/><path d="M0 430H190L225 350L275 500L330 260L390 540L430 430H800" stroke=${ac} strokeWidth="9"/></g>`;
+ if(k==='nodes'){const P=[[560,230],[690,300],[600,400],[720,450],[520,490],[650,545],[450,350]];const E=[[0,1],[1,2],[2,3],[2,4],[4,5],[3,5],[0,6],[6,2]];
+  return html`<g><g stroke=${w} strokeWidth="4">${E.map((e,i)=>html`<line key=${i} x1=${P[e[0]][0]} y1=${P[e[0]][1]} x2=${P[e[1]][0]} y2=${P[e[1]][1]}/>`)}</g>${P.map((p,i)=>html`<circle key=${i} cx=${p[0]} cy=${p[1]} r=${i%3===0?18:12} fill=${i%3===0?ac:'rgba(255,255,255,.55)'}/>`)}</g>`;}
+ if(k==='helix'){const a=[],b=[],R=[];for(let y=130;y<=540;y+=8){const s=70*Math.sin((y-130)/45);a.push((630+s).toFixed(1)+','+y);b.push((630-s).toFixed(1)+','+y);}
+  for(let y=146;y<=540;y+=34){const s=70*Math.sin((y-130)/45);R.push([630+s,630-s,y]);}
+  return html`<g fill="none" strokeWidth="6" strokeLinecap="round"><polyline points=${a.join(' ')} stroke=${ac} opacity=".9"/><polyline points=${b.join(' ')} stroke=${w}/>${R.map((r,i)=>html`<line key=${i} x1=${r[0]} y1=${r[2]} x2=${r[1]} y2=${r[2]} stroke=${w} strokeWidth="4"/>`)}</g>`;}
+ if(k==='chip')return html`<g fill="none" stroke=${w} strokeWidth="6" strokeLinecap="round"><rect x="530" y="230" width="190" height="190" rx="22"/><rect x="570" y="270" width="110" height="110" rx="12" stroke=${ac} opacity=".9"/>${[0,1,2,3].map(i=>html`<g key=${i}><line x1=${555+i*45} y1="200" x2=${555+i*45} y2="230"/><line x1=${555+i*45} y1="420" x2=${555+i*45} y2="450"/><line x1="500" y1=${255+i*45} x2="530" y2=${255+i*45}/><line x1="720" y1=${255+i*45} x2="750" y2=${255+i*45}/></g>`)}</g>`;
+ if(k==='bars')return html`<g>${[90,150,120,230,300].map((h,i)=>html`<rect key=${i} x=${470+i*56} y=${540-h} width="38" height=${h} rx="8" fill=${i===4?ac:'rgba(255,255,255,.24)'}/>`)}</g>`;
+ if(k==='cal')return html`<g fill="none" stroke=${w} strokeWidth="5"><rect x="490" y="230" width="240" height="250" rx="20"/><line x1="490" y1="290" x2="730" y2="290"/>${[0,1,2].map(i=>html`<line key=${i} x1=${570+i*80} y1="290" x2=${570+i*80} y2="480"/>`)}${[0,1].map(i=>html`<line key=${i} x1="490" y1=${355+i*62} x2="730" y2=${355+i*62}/>`)}<rect x="578" y="362" width="64" height="52" rx="10" fill=${ac} stroke="none"/></g>`;
+ return html`<g fill="none" stroke=${w} strokeWidth="6">${[60,110,160,210].map((r,i)=>html`<circle key=${i} cx="610" cy="380" r=${r} stroke=${i===1?ac:w}/>`)}</g>`;}
+function Flyer({o}){const th=o.theme||T.pg;const lines=o.flyer||wrapLines(o.title);const long=Math.max(...lines.map(l=>l.length));const fs=long>15?50:long>12?58:66;
+ const d=pd(o.date);const kick=o.kicker||o.cat.toUpperCase();const gid='g'+String(o.id).replace(/[^a-z0-9]/gi,'');const kw=Math.min(560,kick.length*14+44);
+ return html`<svg className="flyer-svg" viewBox="0 0 800 640" preserveAspectRatio="xMidYMid slice" role="img" aria-label=${'Flyer: '+o.title}>
+ <defs><linearGradient id=${gid} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor=${th[0]}/><stop offset="1" stopColor=${th[1]}/></linearGradient></defs>
+ <rect width="800" height="640" fill=${'url(#'+gid+')'}/>
+ <${Motif} k=${o.motif} ac=${th[2]}/>
+ <rect x="56" y="52" width=${kw} height="44" rx="22" fill=${th[2]}/>
+ <text x="78" y="82" fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize="19" letterSpacing="2" fill="#26180A">${kick}</text>
+ ${lines.map((l,i)=>html`<text key=${i} x="56" y=${236+i*fs*1.14} fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize=${fs} fill="#fff">${l}</text>`)}
+ <rect x="56" y="520" width="90" height="7" rx="3" fill=${th[2]}/>
+ <text x="56" y="574" fontFamily="Source Sans 3, sans-serif" fontWeight="700" fontSize="28" fill="#fff">${ORGS[o.org].name}</text>
+ <text x="56" y="610" fontFamily="Source Sans 3, sans-serif" fontSize="22" fill="rgba(255,255,255,.85)">${o.time?o.time+' · ':''}${o.virtual?'Virtual':o.loc}</text>
+ <rect x="652" y="48" width="96" height="108" rx="18" fill="#fff"/>
+ <text x="700" y="82" textAnchor="middle" fontFamily="Source Sans 3, sans-serif" fontWeight="700" fontSize="20" letterSpacing="2" fill=${th[1]}>${MON[d.getMonth()].toUpperCase()}</text>
+ <text x="700" y="128" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize="44" fill="#26232B">${d.getDate()}</text>
+ <text x="700" y="148" textAnchor="middle" fontFamily="Source Sans 3, sans-serif" fontWeight="700" fontSize="12" letterSpacing="1.5" fill="#7C7789">${o.dateKind==='Deadline'?'DEADLINE':'EVENT'}</text>
+ </svg>`;}
+const Art=({o})=>o.flyerSrc?html`<img className="flyer-img" src=${o.flyerSrc} alt=${'Flyer: '+o.title}/>`:html`<${Flyer} o=${o}/>`;
+
+/* ---------- modal ---------- */
+function Modal({title,onClose,children,wide}){const ref=useRef(null);
+ useEffect(()=>{const prev=document.activeElement;const key=e=>{if(e.key==='Escape')onClose();};document.addEventListener('keydown',key);document.body.style.overflow='hidden';
+  const t=setTimeout(()=>{if(ref.current)ref.current.focus();},0);
+  return()=>{clearTimeout(t);document.removeEventListener('keydown',key);document.body.style.overflow='';if(prev&&prev.focus)prev.focus();};},[]);
+ return html`<div className="scrim" onMouseDown=${e=>{if(e.target===e.currentTarget)onClose();}}>
+ <div className=${cx('sheet',wide&&'wide')} role="dialog" aria-modal="true" aria-label=${title} tabIndex="-1" ref=${ref}>
+ <div className="sheet-h"><h2>${title}</h2><button className="icon-btn" onClick=${onClose} aria-label="Close"><${Icon} name="x"/></button></div>
+ <div className="sheet-b">${children}</div></div></div>`;}
+const Chip=({on,children,onClick,icon})=>html`<button type="button" className=${cx('chip',on&&'on')} aria-pressed=${!!on} onClick=${onClick}>${icon?html`<${Icon} name=${icon} size=${16}/>`:null}${children}</button>`;
+
+/* ---------- state ---------- */
+function initial(){return{auth:'welcome',
+ profile:{first:'Aliyah',name:'Aliyah Thomas',email:'aliyah.thomas@pvamu.edu',major:'Mechanical Engineering',classif:'Senior',gradYear:'2027',interests:['Full-time employment','Biomedical Engineering','Mechanical Engineering','Networking','Professional development','Research','Career fairs'],careers:['Engineering','Biomedical Engineering','Mechanical Engineering'],photo:null},
+ acct:'student',opps:OPPS.slice(),
+ saved:[{id:'summer-int',status:'Planning to Apply'},{id:'bme-fair',status:'Saved'}],reposts:['net-night'],interested:[],
+ cal:[{id:'c1',title:'Biomedical Engineering Career Fair',date:'2026-11-23',time:'10:00 AM – 2:00 PM',kind:'event',oppId:'bme-fair'},
+  {id:'c2',title:'Summer Engineering Internship',date:'2026-11-30',time:null,kind:'deadline',oppId:'summer-int'},
+  {id:'c3',title:'Biomedical Engineering Student Organization Meeting',date:'2026-12-01',time:'6:00 PM – 7:00 PM',kind:'event',oppId:'bme-meeting'}],
+ notifs:[
+  {id:'n1',type:'match',text:'New match: Entry-Level Mechanical Engineer at Gulf Coast Thermal Systems',oppId:'ft-me',when:'2h ago',read:false},
+  {id:'n2',type:'event',text:'Biomedical Engineering Career Fair is tomorrow at 10:00 AM',oppId:'bme-fair',when:'5h ago',read:false},
+  {id:'n3',type:'deadline',text:'Summer Engineering Internship closes in 8 days',oppId:'summer-int',when:'Yesterday',read:false},
+  {id:'n4',type:'org',text:'PVAMU College of Engineering posted Engineering Networking Night',oppId:'net-night',when:'Yesterday',read:true},
+  {id:'n5',type:'repost',text:'Your repost of Engineering Networking Night reached 38 students',oppId:'net-night',when:'2d ago',read:true},
+  {id:'n6',type:'match',text:'New match: Product Development Engineer — New Graduate at Lonestar Devices',oppId:'pd-eng',when:'3d ago',read:true}],
+ followed:['psu','coe','meridian','alumni','bme'],toast:null,
+ explore:{q:'',cat:'All',major:'Any',deadline:'Any',interest:'Any',loc:'Any'},
+ modal:null,draft:blankDraft(),pub:null,justSaved:null,justAdded:null,homeCount:6,demoOpen:false,switchOpen:false,focusSearch:false,
+ calView:{y:2026,m:10,sel:'2026-11-22'}};}
+const TABS=['home','explore','saved','calendar','notifications','profile','create'];
+function parseHash(){const h=(location.hash||'').replace('#','');if(h.startsWith('opp-'))return{name:'opp',id:h.slice(4)};return TABS.includes(h)?{name:h}:{name:'home'};}
+const NIC={match:'sparkle',event:'calendar',deadline:'clock',repost:'repeat',org:'megaphone'};
+
+function App(){
+ const [S,setS]=useState(initial);const SR=useRef(S);SR.current=S;
+ const set=useCallback(p=>setS(s=>({...s,...(typeof p==='function'?p(s):p)})),[]);
+ const [route,setRoute]=useState(parseHash);
+ const lastHash=useRef(location.hash);const memo=useRef({});const yRef=useRef(0);
+ useEffect(()=>{const sc=()=>{yRef.current=window.scrollY;};window.addEventListener('scroll',sc,{passive:true});
+  const hc=()=>{const prev=lastHash.current.replace('#','');memo.current[prev]=yRef.current;lastHash.current=location.hash;
+   const next=location.hash.replace('#','');setRoute(parseHash());
+   const y=prev.startsWith('opp-')&&memo.current[next]?memo.current[next]:0;setTimeout(()=>window.scrollTo(0,y),0);};
+  window.addEventListener('hashchange',hc);return()=>{window.removeEventListener('scroll',sc);window.removeEventListener('hashchange',hc);};},[]);
+ useEffect(()=>{if(!S.toast)return;const t=setTimeout(()=>set({toast:null}),3800);return()=>clearTimeout(t);},[S.toast&&S.toast.id]);
+ useEffect(()=>{if(!S.justSaved)return;const t=setTimeout(()=>set({justSaved:null}),5000);return()=>clearTimeout(t);},[S.justSaved]);
+ useEffect(()=>{if(!S.justAdded)return;const t=setTimeout(()=>set({justAdded:null}),5000);return()=>clearTimeout(t);},[S.justAdded]);
+ const toast=(msg,action)=>set({toast:{id:Math.random(),msg,action}});
+ const nav=(name,id)=>{const h=id?'opp-'+id:name;if(location.hash==='#'+h){window.scrollTo(0,0);setRoute(parseHash());}else location.hash=h;};
+ const isSaved=id=>SR.current.saved.some(x=>x.id===id);
+ const A={S,set,route,nav,toast,
+  closeModal:()=>set({modal:null}),
+  isSaved,isReposted:id=>S.reposts.includes(id),isInterested:id=>S.interested.includes(id),
+  onCal:id=>S.cal.some(c=>c.oppId===id),
+  toggleSave(id){const s=SR.current;
+   if(isSaved(id)){set({saved:s.saved.filter(x=>x.id!==id)});toast('Removed from Saved',{label:'Undo',run:()=>set(st=>({saved:st.saved.some(x=>x.id===id)?st.saved:[...st.saved,{id,status:'Saved'}]}))});}
+   else{set({saved:[...s.saved,{id,status:'Saved'}],justSaved:id});toast('Saved to your opportunities',{label:'View',run:()=>nav('saved')});}},
+  setStatus(id,status){set(s=>({saved:s.saved.map(x=>x.id===id?{...x,status}:x)}));toast('Status updated: '+status);},
+  toggleRepost(id){const s=SR.current;const o=byId(s.opps,id);
+   if(s.reposts.includes(id)){set({reposts:s.reposts.filter(x=>x!==id)});toast('Repost removed from your profile');}
+   else{set({reposts:[id,...s.reposts],notifs:[{id:'n'+Date.now(),type:'repost',text:'You reposted '+o.title+'. It is now on your profile.',oppId:id,when:'Just now',read:false},...s.notifs]});toast('Reposted to your profile',{label:'View',run:()=>nav('profile')});}},
+  toggleInterested(id){const s=SR.current;
+   if(s.interested.includes(id)){set({interested:s.interested.filter(x=>x!==id)});toast('Removed from interested');}
+   else{set({interested:[...s.interested,id]});toast('Marked as interested. We will remind you the day before.');}},
+  addToCal(id){const s=SR.current;const o=byId(s.opps,id);
+   if(s.cal.some(c=>c.oppId===id)){toast('Already on your calendar',{label:'View',run:()=>nav('calendar')});return;}
+   const ev={id:'c'+Date.now(),title:o.title,date:o.date,time:o.time||null,kind:o.dateKind==='Deadline'?'deadline':'event',oppId:id};const d=pd(o.date);
+   set({cal:[...s.cal,ev],justAdded:ev.id,calView:{y:d.getFullYear(),m:d.getMonth(),sel:o.date}});
+   toast((ev.kind==='deadline'?'Deadline':'Event')+' added to your PantherConnect calendar',{label:'View',run:()=>nav('calendar')});},
+  toggleFollow(orgId){const s=SR.current;const on=s.followed.includes(orgId);set({followed:on?s.followed.filter(x=>x!==orgId):[...s.followed,orgId]});toast(on?'Unfollowed '+ORGS[orgId].name:'Following '+ORGS[orgId].name);},
+  openNotif(n){set(s=>({notifs:s.notifs.map(x=>x.id===n.id?{...x,read:true}:x)}));nav('opp',n.oppId);},
+  switchAcct(a){set({acct:a,switchOpen:false});toast(a==='org'?'Switched to Biomedical Engineering Student Org':'Switched to your student account');if(a==='student'&&route.name==='create'){}},
+  publish(){const s=SR.current;const id='new-'+(s.opps.filter(o=>o.id.startsWith('new-')).length+1);const o=draftToOpp(s.draft,id);const r=reach(o.audience);
+   const hit=audMatch(o.audience,s.profile);
+   set({opps:[o,...s.opps],pub:{id,reach:r},notifs:hit?[{id:'n'+Date.now(),type:'match',text:'New match: '+o.title+' from '+ORGS.bme.name,oppId:id,when:'Just now',read:false},...s.notifs]:s.notifs});},
+  jump(n){const s=SR.current;const base={demoOpen:false,switchOpen:false,modal:null};const go=h=>{location.hash=h;};const app={auth:'app',...base};
+   if(n===1){set({...base,auth:'onboarding'});go('');return;}
+   if(n===2){set({...app,acct:'student',homeCount:6});go('home');}
+   if(n===3){set({...app,acct:'student',explore:{q:'Full-Time Mechanical Engineering',cat:'Full-Time Jobs',major:'Mechanical Engineering',deadline:'Any',interest:'Any',loc:'Any'}});go('explore');}
+   if(n===4){set({...app,acct:'student'});if(!isSaved('ft-me'))A.toggleSave('ft-me');go('opp-ft-me');}
+   if(n===5){set({...app,acct:'student'});if(!isSaved('ft-me'))A.toggleSave('ft-me');set({justSaved:'ft-me'});go('saved');}
+   if(n===6){set({...app,acct:'student'});if(!s.cal.some(c=>c.oppId==='ft-me'))A.addToCal('ft-me');set({calView:{y:2026,m:10,sel:'2026-11-22'}});go('calendar');}
+   if(n===7){set({...app,acct:'org',draft:{...SAMPLE},pub:null});go('create');}
+   if(n===8){set({...app,acct:'org',draft:{...SAMPLE,step:2,majors:['Mechanical Engineering','Biomedical Engineering'],classes:['Junior','Senior'],interests:['Networking','Professional Development']},pub:null});go('create');}
+   setTimeout(()=>window.scrollTo(0,0),0);},
+  reset(){setS(initial());location.hash='';window.scrollTo(0,0);}};
+ const pages={home:Home,explore:Explore,saved:Saved,calendar:CalendarPage,notifications:Notifications,profile:Profile,create:Create};
+ let page;
+ if(route.name==='opp'){const o=byId(S.opps,route.id);page=o?html`<${Detail} o=${o}/>`:html`<${Home}/>`;}
+ else{const P=pages[route.name]||Home;page=html`<${P}/>`;}
+ const m=S.modal;
+ return html`<${Ctx.Provider} value=${A}>
+ ${S.auth==='welcome'?html`<${Welcome}/>`:S.auth==='onboarding'?html`<${Onboarding}/>`:S.auth==='ready'?html`<${Ready}/>`:html`<${Shell} page=${page}/>`}
+ ${m&&m.type==='signin'?html`<${SignIn}/>`:null}
+ ${m&&m.type==='share'?html`<${ShareModal} o=${byId(S.opps,m.id)}/>`:null}
+ ${m&&m.type==='apply'?html`<${ApplyModal} o=${byId(S.opps,m.id)}/>`:null}
+ ${m&&m.type==='edit'?html`<${EditProfile}/>`:null}
+ ${m&&m.type==='addEvent'?html`<${AddEvent}/>`:null}
+ ${m&&m.type==='preview'?html`<${PreviewModal}/>`:null}
+ <${DemoMenu}/>
+ ${S.toast?html`<div className="toast" role="status" aria-live="polite" key=${S.toast.id}><span>${S.toast.msg}</span>${S.toast.action?html`<button onClick=${()=>{S.toast.action.run();set({toast:null});}}>${S.toast.action.label}</button>`:null}</div>`:null}
+ <//>`;}
+
+/* ---------- shell ---------- */
+const NAV=[['home','Home','home'],['explore','Explore','compass'],['saved','Saved','bookmark'],['calendar','Calendar','calendar'],['notifications','Notifications','bell'],['create','Create','plus'],['profile','Profile','user']];
+function Me({size=36,ring}){const A=useContext(Ctx);return A.S.acct==='org'?html`<${OrgLogo} org="bme" size=${size} ring=${ring}/>`:html`<${Avatar} src=${A.S.profile.photo} size=${size} ring=${ring}/>`;}
+function Shell({page}){const A=useContext(Ctx);const {S,route,nav}=A;const unread=S.notifs.filter(n=>!n.read).length;const org=S.acct==='org';
+ useEffect(()=>{if(!S.switchOpen)return;const c=e=>{if(!e.target.closest('.side-foot'))A.set({switchOpen:false});};document.addEventListener('mousedown',c);return()=>document.removeEventListener('mousedown',c);},[S.switchOpen]);
+ const [q,setQ]=useState('');
+ return html`<div className="app">
+ <nav className="side" aria-label="Main">
+  <${Logo} onClick=${()=>nav('home')}/>
+  ${NAV.map(([k,l,ic])=>html`<button key=${k} className=${cx('nav-item',route.name===k&&'on')} aria-current=${route.name===k?'page':null} onClick=${()=>nav(k)}>
+   <${Icon} name=${ic} size=${24}/><span className="lbl">${l}</span>${k==='notifications'&&unread?html`<span className="badge-dot">${unread}</span>`:null}${k==='create'&&!org?html`<span className="lbl" style=${{marginLeft:'auto',color:'var(--fg-3)'}}><${Icon} name="lock" size=${15}/></span>`:null}</button>`)}
+  <div className="side-foot">
+   ${S.switchOpen?html`<div className="menu" role="menu"><${AcctMenu}/></div>`:null}
+   <button className="switcher" onClick=${()=>A.set({switchOpen:!S.switchOpen})} aria-haspopup="menu" aria-expanded=${S.switchOpen}>
+    <${Me} size=${36}/><span className="who"><b>${org?'BME Student Org':S.profile.name}</b><small>${org?'Organization account':'Student account'}</small></span><${Icon} name="swap" size=${18}/></button>
+  </div>
+ </nav>
+ <div className="main">
+  <header className="topbar"><div className="topbar-in">
+   <${Logo} mobile=${true} onClick=${()=>nav('home')}/>
+   <form className="tsearch" role="search" onSubmit=${e=>{e.preventDefault();A.set({explore:{...S.explore,q:q.trim()}});nav('explore');}}>
+    <${Icon} name="search" size=${18}/><input value=${q} onChange=${e=>setQ(e.target.value)} placeholder="Search opportunities" aria-label="Search opportunities"/></form>
+   <span className="grow"></span>
+   ${org?html`<button className="acct-chip" onClick=${()=>nav('profile')}><${Icon} name="megaphone" size=${15}/>Posting as BME Student Org</button>`:null}
+   <button className="icon-btn tsearch-icon" aria-label="Search" onClick=${()=>{A.set({focusSearch:true});nav('explore');}}><${Icon} name="search"/></button>
+   <button className="icon-btn" aria-label=${'Notifications'+(unread?', '+unread+' unread':'')} onClick=${()=>nav('notifications')}><${Icon} name="bell"/>${unread?html`<span className="badge-dot">${unread}</span>`:null}</button>
+   <button className="icon-btn" aria-label="Profile" onClick=${()=>nav('profile')}><${Me} size=${34}/></button>
+  </div></header>
+  <main>${page}</main>
+ </div>
+ <nav className="bnav" aria-label="Main">
+  ${[['home','Home','home'],['explore','Explore','compass'],['create','','plus'],['saved','Saved','bookmark'],['calendar','Calendar','calendar']].map(([k,l,ic])=>k==='create'
+   ?html`<button key=${k} aria-label=${org?'Create post':'Create (organization accounts only)'} onClick=${()=>nav('create')}><span className=${cx('plus',!org&&'locked')}><${Icon} name=${org?'plusc':'lock'} size=${24}/></span></button>`
+   :html`<button key=${k} className=${route.name===k?'on':''} onClick=${()=>nav(k)}><${Icon} name=${ic} size=${24} fill=${route.name===k&&k==='saved'}/>${l}</button>`)}
+ </nav></div>`;}
+function AcctMenu(){const A=useContext(Ctx);const org=A.S.acct==='org';
+ return html`<${Frag}><button role="menuitem" onClick=${()=>A.switchAcct('student')}><${Avatar} src=${A.S.profile.photo} size=${36}/><span style=${{flex:1}}><b>${A.S.profile.name}</b><small>Student · Mechanical Engineering</small></span>${!org?html`<${Icon} name="check" size=${18}/>`:null}</button>
+ <button role="menuitem" onClick=${()=>A.switchAcct('org')}><${OrgLogo} org="bme" size=${36}/><span style=${{flex:1}}><b>Biomedical Engineering Student Org</b><small>Organization · President</small></span>${org?html`<${Icon} name="check" size=${18}/>`:null}</button><//>`;}
+function DemoMenu(){const A=useContext(Ctx);const {S,set}=A;
+ const items=['Login and onboarding','Personalized home feed','Explore and search','Opportunity details','Saved opportunities','Calendar','Create opportunity','Audience targeting and publish'];
+ return html`<div className="demo">${S.demoOpen?html`<div className="menu" role="menu"><div style=${{padding:'6px 10px',fontWeight:700,fontSize:13,color:'var(--fg-3)'}}>JUMP TO A SCREENSHOT SCREEN</div>
+  ${items.map((t,i)=>html`<button key=${i} role="menuitem" onClick=${()=>A.jump(i+1)}><span className="n">${i+1}</span>${t}</button>`)}<hr/>
+  <button role="menuitem" onClick=${A.reset}><${Icon} name="reset" size=${18}/>Reset demo</button></div>`:null}
+  <button className="demo-btn" aria-expanded=${S.demoOpen} onClick=${()=>set({demoOpen:!S.demoOpen})}><${Icon} name="layers" size=${18}/>Demo</button></div>`;}
+
+/* ---------- welcome, sign-in, onboarding ---------- */
+function Welcome(){const A=useContext(Ctx);
+ const demo=()=>{A.set({auth:'app'});location.hash='home';A.toast('Signed in with the demo account');};
+ const pick=id=>byId(OPPS,id);
+ return html`<div className="auth"><div className="auth-in"><div>
+  <${Mark} size=${56}/>
+  <h1>Panther<em>Connect</em></h1>
+  <p style=${{font:'700 20px var(--fd)',marginBottom:10}}>One Platform. Better Connections. More Opportunities.</p>
+  <p className="lead">Jobs, internships, career fairs, research, and campus events from across PVAMU, matched to your major and goals, in one place instead of five.</p>
+  <div className="btns">
+   <button className="btn btn-gold" onClick=${()=>A.set({modal:{type:'signin'}})}><${Icon} name="user" size=${20}/>Continue with PVAMU Email</button>
+   <button className="btn btn-ghost" onClick=${demo}>Use the demo account (Aliyah Thomas)</button></div>
+  <small>Prototype for COMP 4384. Sign-in is simulated and listings are fictional.</small></div>
+  <div className="collage" aria-hidden="true">
+   <div className="col-card" style=${{left:0,top:10,transform:'rotate(-6deg)'}}><${Flyer} o=${pick('ft-me')}/></div>
+   <div className="col-card" style=${{right:0,top:120,transform:'rotate(5deg)'}}><${Flyer} o=${pick('bme-fair')}/></div>
+   <div className="col-card" style=${{left:60,top:250,transform:'rotate(-2deg)'}}><${Flyer} o=${pick('net-night')}/></div></div>
+ </div></div>`;}
+function SignIn(){const A=useContext(Ctx);const [email,setEmail]=useState('aliyah.thomas@pvamu.edu');const [busy,setBusy]=useState(false);const [err,setErr]=useState('');
+ const go=e=>{e.preventDefault();if(!/^[^\s@]+@pvamu\.edu$/i.test(email.trim())){setErr('Use your PVAMU email address (name@pvamu.edu).');return;}
+  setErr('');setBusy(true);setTimeout(()=>A.set({auth:'onboarding',modal:null}),1000);};
+ return html`<${Modal} title="Sign in with PVAMU email" onClose=${A.closeModal}><form className="form" onSubmit=${go}>
+  <div className=${cx('field',err&&'bad')}><label htmlFor="em">PVAMU email</label><input id="em" type="email" value=${email} onChange=${e=>setEmail(e.target.value)} autoComplete="off"/>${err?html`<span className="err" role="alert">${err}</span>`:html`<span className="hint">Simulated sign-in. No password is requested and nothing is sent anywhere.</span>`}</div>
+  <button className="btn btn-primary btn-block" disabled=${busy}>${busy?'Verifying…':'Continue'}</button></form><//>`;}
+function Onboarding(){const A=useContext(Ctx);const p=A.S.profile;const setP=x=>A.set(s=>({profile:{...s.profile,...x}}));
+ const tog=(k,v)=>setP({[k]:p[k].includes(v)?p[k].filter(x=>x!==v):[...p[k],v]});
+ return html`<div className="ob"><div className="ob-in">
+  <div><${Logo} onClick=${()=>{}}/></div>
+  <div><h1>Welcome, ${p.first}</h1><p style=${{color:'var(--fg-2)',marginTop:6}}>Tell us a little about you and we will build your feed. You can change this anytime.</p></div>
+  <section className="card"><h2>Academic information</h2><div className="two">
+   <div className="field"><label htmlFor="mj">Major</label><select id="mj" value=${p.major} onChange=${e=>setP({major:e.target.value})}>${[...MAJORS,'Other'].map(m=>html`<option key=${m}>${m}</option>`)}</select></div>
+   <div className="field"><label htmlFor="gy">Graduation year</label><select id="gy" value=${p.gradYear} onChange=${e=>setP({gradYear:e.target.value})}>${['2026','2027','2028','2029','2030'].map(y=>html`<option key=${y}>${y}</option>`)}</select></div></div>
+   <div className="field"><span>Classification</span><div className="chips" role="group" aria-label="Classification">${CLASSES.map(c=>html`<${Chip} key=${c} on=${p.classif===c} onClick=${()=>setP({classif:c})}>${c}<//>`)}</div></div></section>
+  <section className="card"><h2>What are you looking for?</h2><div className="chips" role="group" aria-label="Interests">${INTERESTS.map(i=>html`<${Chip} key=${i} on=${p.interests.includes(i)} onClick=${()=>tog('interests',i)}>${i}<//>`)}</div></section>
+  <section className="card"><h2>Career interests</h2><div className="cgrid">${CAREERS.map(([c,ic])=>html`<button key=${c} type="button" className=${cx('ccard',p.careers.includes(c)&&'on')} aria-pressed=${p.careers.includes(c)} onClick=${()=>tog('careers',c)}><span className="ci"><${Icon} name=${ic} size=${20}/></span>${c}</button>`)}</div></section>
+ </div>
+ <div className="ob-foot"><div className="in"><span style=${{color:'var(--fg-2)',fontSize:14}}>${p.interests.length} interests · ${p.careers.length} career areas</span>
+  <button className="btn btn-primary" disabled=${!p.interests.length} onClick=${()=>A.set({auth:'ready'})}>Create my feed<${Icon} name="arrow" size=${18}/></button></div></div></div>`;}
+function Ready(){const A=useContext(Ctx);
+ return html`<div className="ready"><div><div className="okmark"><${Icon} name="check" size=${44}/></div><h1>Your PantherConnect feed is ready!</h1><p>We matched opportunities to ${A.S.profile.major} and your interests.</p>
+  <button className="btn btn-primary" onClick=${()=>{A.set({auth:'app'});location.hash='home';}}>Go to my feed<${Icon} name="arrow" size=${18}/></button></div></div>`;}
+
+/* ---------- shared bits ---------- */
+function Meta({o}){const d=dayDiff(o.date);
+ return html`<div className="meta">
+  <span><${Icon} name="calendar" size=${16}/>${o.dateKind==='Deadline'?'Apply by ':''}${fmt(o.date)}${o.time?' · '+o.time:''} <em className=${cx('when',d>=0&&d<=7&&'soon')}>${rel(d)}</em></span>
+  <span><${Icon} name=${o.virtual?'globe':'pin'} size=${16}/>${o.virtual?'Virtual':o.loc}</span></div>`;}
+function PostCard({o,preview}){const A=useContext(Ctx);const org=ORGS[o.org];const saved=A.isSaved(o.id),rep=A.isReposted(o.id),int=A.isInterested(o.id);
+ const why=matchedTags(o,A.S.profile);const dis=preview?{'aria-disabled':'true',tabIndex:-1}:{};
+ const act=(fn)=>preview?undefined:fn;
+ return html`<article className="post card" aria-label=${o.title}>
+ <header className="post-h"><${OrgLogo} org=${o.org} size=${42} ring=${true}/>
+  <button className="who" onClick=${act(()=>A.nav('opp',o.id))} ...${dis}><b>${org.name}${org.ver?html`<span className="verified" title="Verified PVAMU account"><${Icon} name="check" size=${14}/></span>`:null}</b><small>${o.virtual?'Virtual':o.loc} · ${o.badge||o.cat}</small></button>
+  ${o.postedDays<=2?html`<span className="pill gold">New</span>`:null}</header>
+ <button className="media" onClick=${act(()=>A.nav('opp',o.id))} aria-label=${'Open '+o.title} ...${dis}><${Art} o=${o}/></button>
+ <div className="acts">
+  ${o.interest?html`<button className=${cx('act heart',int&&'on')} aria-pressed=${int} onClick=${act(()=>A.toggleInterested(o.id))} ...${dis}><${Icon} name="heart" fill=${int}/>${int?'Interested':'Interested?'}</button>`:null}
+  <button className=${cx('act',rep&&'on')} aria-pressed=${rep} onClick=${act(()=>A.toggleRepost(o.id))} ...${dis}><${Icon} name="repeat"/>${rep?'Reposted':'Repost'}</button>
+  <button className="act" onClick=${act(()=>A.set({modal:{type:'share',id:o.id}}))} ...${dis}><${Icon} name="send"/>Share</button>
+  <button className=${cx('act right',saved&&'on')} aria-pressed=${saved} onClick=${act(()=>A.toggleSave(o.id))} ...${dis}><${Icon} name="bookmark" fill=${saved}/>${saved?'Saved':'Save'}</button></div>
+ <div className="cap">
+  ${why.length?html`<div className="why"><${Icon} name="sparkle" size=${15}/>Matches: ${why.join(' · ')}</div>`:null}
+  <h3>${o.title}</h3><p className="desc">${o.short}</p>
+  <${Meta} o=${o}/>
+  <div className="meta"><span><${Icon} name="user" size=${16}/>Open to: ${o.elig}</span></div>
+  <button className="btn btn-line btn-block" onClick=${act(()=>A.nav('opp',o.id))} ...${dis}>View details<${Icon} name="arrow" size=${18}/></button></div></article>`;}
+
+/* ---------- home ---------- */
+function Home(){const A=useContext(Ctx);const {S}=A;
+ const feed=useMemo(()=>feedFor(S.opps,S.profile),[S.opps,S.profile]);
+ const closing=useMemo(()=>S.opps.filter(o=>o.dateKind==='Deadline'&&dayDiff(o.date)>=0).sort((a,b)=>pd(a.date)-pd(b.date)).slice(0,4),[S.opps]);
+ const stories=S.followed.map(id=>({id,o:S.opps.find(x=>x.org===id)})).filter(x=>x.o);
+ return html`<div className="home-grid"><div className="page">
+  <div className="greet"><h1>Good afternoon, ${S.profile.first}!</h1><p>Opportunities picked for you.</p></div>
+  <div className="stories" role="list" aria-label="Organizations you follow">${stories.map(({id,o})=>html`<button key=${id} role="listitem" className="story" onClick=${()=>A.nav('opp',o.id)}><${OrgLogo} org=${id} size=${58} ring=${true}/><span>${ORGS[id].name.replace('PVAMU ','').replace('Biomedical Engineering Student Org','BME Org')}</span></button>`)}</div>
+  ${feed.slice(0,S.homeCount).map(o=>html`<${PostCard} key=${o.id} o=${o}/>`)}
+  ${feed.length>S.homeCount?html`<div className="more"><button className="btn btn-line" onClick=${()=>A.set({homeCount:S.homeCount+5})}>Show more opportunities</button></div>`:html`<p style=${{textAlign:'center',color:'var(--fg-3)',padding:'8px 0 24px'}}>You are all caught up. Try Explore for more.</p>`}
+ </div>
+ <aside className="rail" aria-label="Closing soon"><div className="card panel"><h2><${Icon} name="clock" size=${18}/>Closing soon</h2>
+  ${closing.map(o=>html`<button key=${o.id} className="ev" style=${{width:'100%',border:0,borderTop:'1px solid var(--line)',background:'none',textAlign:'left'}} onClick=${()=>A.nav('opp',o.id)}><${OrgLogo} org=${o.org} size=${36}/><span className="tx"><b>${o.title}</b><small>${rel(dayDiff(o.date))} · ${fmt(o.date)}</small></span></button>`)}</div>
+  <p style=${{color:'var(--fg-3)',fontSize:13,padding:'0 6px'}}>Prototype. All listings are fictional.</p></aside></div>`;}
+
+/* ---------- explore ---------- */
+function Tile({o}){const A=useContext(Ctx);const saved=A.isSaved(o.id);const d=dayDiff(o.date);
+ return html`<div className="tile" role="button" tabIndex="0" aria-label=${'Open '+o.title} onClick=${()=>A.nav('opp',o.id)} onKeyDown=${e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();A.nav('opp',o.id);}}}>
+  <${Art} o=${o}/>
+  <span className="tl pill gold">${o.badge||o.cat}</span>
+  <span className="tr"><button className=${cx('icon-btn',saved&&'on')} aria-label=${saved?'Remove bookmark':'Save'} aria-pressed=${saved} onClick=${e=>{e.stopPropagation();A.toggleSave(o.id);}}><${Icon} name="bookmark" size=${18} fill=${saved}/></button>
+   <button className="icon-btn" aria-label="Share" onClick=${e=>{e.stopPropagation();A.set({modal:{type:'share',id:o.id}});}}><${Icon} name="send" size=${18}/></button></span>
+  <span className="shade"><b>${o.title}</b><small>${ORGS[o.org].name} · ${o.dateKind==='Deadline'?'Apply by ':''}${MON[pd(o.date).getMonth()]} ${pd(o.date).getDate()}</small></span></div>`;}
+function Explore(){const A=useContext(Ctx);const E=A.S.explore;const inp=useRef(null);
+ const setE=p=>A.set(s=>({explore:{...s.explore,...p}}));
+ useEffect(()=>{if(A.S.focusSearch&&inp.current){inp.current.focus();A.set({focusSearch:false});}},[A.S.focusSearch]);
+ const res=useMemo(()=>runSearch(A.S.opps,E),[A.S.opps,E]);
+ const active=E.q||E.cat!=='All'||E.major!=='Any'||E.deadline!=='Any'||E.interest!=='Any'||E.loc!=='Any';
+ const sel=(label,key,opts)=>html`<label className="fsel">${label}<select value=${E[key]} onChange=${e=>setE({[key]:e.target.value})}>${opts.map(o=>html`<option key=${o}>${o}</option>`)}</select></label>`;
+ return html`<div className="page wide">
+  <h1 style=${{fontSize:24,marginBottom:12}}>Explore</h1>
+  <div className="searchbox"><${Icon} name="search" size=${20}/><input ref=${inp} value=${E.q} onChange=${e=>setE({q:e.target.value})} placeholder="Search jobs, events, research, scholarships" aria-label="Search opportunities"/>
+   ${E.q?html`<button className="icon-btn" aria-label="Clear search" onClick=${()=>setE({q:''})}><${Icon} name="x" size=${18}/></button>`:null}</div>
+  ${!E.q?html`<div className="rowscroll" aria-label="Suggested searches"><span style=${{alignSelf:'center',color:'var(--fg-3)',fontSize:14,flex:'none'}}>Try:</span>${['Full-Time Mechanical Engineering','Career fair','Research','Virtual'].map(s=>html`<${Chip} key=${s} onClick=${()=>setE({q:s})}>${s}<//>`)}</div>`:null}
+  <div className="rowscroll" role="group" aria-label="Categories"><${Chip} on=${E.cat==='All'} icon="grid" onClick=${()=>setE({cat:'All'})}>All<//>${CATS.map(c=>html`<${Chip} key=${c} on=${E.cat===c} icon=${CAT_ICON[c]} onClick=${()=>setE({cat:E.cat===c?'All':c})}>${c}<//>`)}</div>
+  <div className="filters">${sel('Major','major',['Any',...MAJORS])}${sel('Opportunity type','cat',['All',...CATS])}${sel('Deadline','deadline',['Any','Next 7 days','Next 30 days','Next 3 months','Later'])}${sel('Interest','interest',['Any',...INTERESTS])}${sel('Location','loc',['Any',...LOCS])}</div>
+  <div style=${{display:'flex',justifyContent:'space-between',alignItems:'center',margin:'4px 0 12px'}} aria-live="polite"><b>${res.length} ${res.length===1?'result':'results'}</b>${active?html`<button className="btn btn-sm btn-line" onClick=${()=>A.set({explore:{q:'',cat:'All',major:'Any',deadline:'Any',interest:'Any',loc:'Any'}})}>Clear all</button>`:null}</div>
+  ${res.length?html`<div className="tiles">${res.map(o=>html`<${Tile} key=${o.id} o=${o}/>`)}</div>`:html`<div className="empty card"><${Icon} name="search" size=${32}/><h3>No matches yet</h3><p>Try fewer filters or a broader search.</p><button className="btn btn-primary" onClick=${()=>A.set({explore:{q:'',cat:'All',major:'Any',deadline:'Any',interest:'Any',loc:'Any'}})}>Clear all</button></div>`}
+ </div>`;}
+
+/* ---------- detail ---------- */
+function Detail({o}){const A=useContext(Ctx);const org=ORGS[o.org];const saved=A.isSaved(o.id),rep=A.isReposted(o.id),int=A.isInterested(o.id),cal=A.onCal(o.id),fol=A.S.followed.includes(o.org);const d=dayDiff(o.date);
+ const facts=[['Category',catLong(o)],[o.kind==='event'?'Format':'Experience',o.level],['Major',o.majors.includes('All')?'All majors':o.majors.join(', ')],['Location',o.loc],[o.dateKind==='Deadline'?'Application deadline':'Date',fmt(o.date)+(o.time?' · '+o.time:'')]];
+ if(o.comp)facts.push(['Pay range',o.comp]);
+ const job=o.kind!=='event';
+ return html`<div className="page mid">
+  <button className="back" onClick=${()=>{if(history.length>1)history.back();else A.nav('home');}}><${Icon} name="left" size=${20}/>Back</button>
+  <div className="hero"><${Art} o=${o}/></div>
+  <div style=${{display:'flex',alignItems:'center',gap:12,marginTop:16}}><${OrgLogo} org=${o.org} size=${46} ring=${true}/><div style=${{flex:1,minWidth:0}}><b style=${{display:'block'}}>${org.name}</b><span style=${{color:'var(--fg-3)',fontSize:14}}>${org.kind}</span></div>
+   <button className=${cx('btn btn-sm',fol?'btn-line':'btn-primary')} aria-pressed=${fol} onClick=${()=>A.toggleFollow(o.org)}>${fol?'Following':'Follow'}</button></div>
+  <h1 className="d-title">${o.title}</h1>
+  <div className="chips"><span className="pill">${o.badge||catLong(o)}</span><span className=${cx('pill',d<=7&&d>=0?'warn':'plain')}>${o.dateKind==='Deadline'?'Closes':'Happens'} ${rel(d).toLowerCase()}</span><span className="pill plain"><${Icon} name="info" size=${13}/>Simulated listing</span></div>
+  <div className="d-acts">
+   <button className=${cx('btn btn-line',saved&&'on')} aria-pressed=${saved} onClick=${()=>A.toggleSave(o.id)}><${Icon} name="bookmark" size=${18} fill=${saved}/>${saved?'Saved':'Save'}</button>
+   <button className="btn btn-line" onClick=${()=>A.set({modal:{type:'share',id:o.id}})}><${Icon} name="send" size=${18}/>Share</button>
+   <button className=${cx('btn btn-line',rep&&'on')} aria-pressed=${rep} onClick=${()=>A.toggleRepost(o.id)}><${Icon} name="repeat" size=${18}/>${rep?'Reposted':'Repost'}</button>
+   ${o.interest?html`<button className=${cx('btn btn-line',int&&'on')} aria-pressed=${int} onClick=${()=>A.toggleInterested(o.id)}><${Icon} name="heart" size=${18} fill=${int}/>Interested</button>`:null}
+   <button className=${cx('btn btn-line',cal&&'on')} onClick=${()=>A.addToCal(o.id)}><${Icon} name=${cal?'check':'calendar'} size=${18}/>${cal?'On calendar':'Add to Calendar'}</button></div>
+  <button className="btn btn-gold btn-block" style=${{minHeight:52,fontSize:16}} onClick=${()=>A.set({modal:{type:'apply',id:o.id}})}>${job?'Apply':'Register'}<${Icon} name="ext" size=${18}/></button>
+  <div className="sec"><div className="facts">${facts.map(([k,v])=>html`<div key=${k}><small>${k}</small>${v}</div>`)}</div></div>
+  <div className="sec"><h2>${job?'About the role':'About this event'}</h2><p style=${{color:'var(--fg-2)'}}>${o.about}</p></div>
+  <div className="sec"><h2>${job?'Responsibilities':'Event information'}</h2><ul>${o.points.map((p,i)=>html`<li key=${i}>${p}</li>`)}</ul></div>
+  <div className="sec"><h2>Qualifications and eligibility</h2><ul>${o.quals.map((p,i)=>html`<li key=${i}>${p}</li>`)}</ul><p style=${{marginTop:10}}><span className="pill"><${Icon} name="user" size=${13}/>${o.elig}</span></p></div>
+  <div className="sec"><h2>${job?'Application link':'Registration link'}</h2><div className="linkbox"><${Icon} name="link" size=${18}/>${o.link}</div></div>
+  <div className="note"><${Icon} name="info" size=${20}/><span>This is a simulated listing made for the PantherConnect prototype. The employer, dates, pay, and link are fictional and not a confirmed opportunity.</span></div>
+ </div>`;}
+
+/* ---------- share + apply ---------- */
+function ShareModal({o}){const A=useContext(Ctx);const [sent,setSent]=useState([]);const url='pantherconnect.example/o/'+o.id;const ref=useRef(null);
+ const copy=async()=>{try{await navigator.clipboard.writeText(url);A.toast('Link copied');}catch(e){if(ref.current){ref.current.select();}A.toast('Link selected. Press Ctrl+C or Cmd+C to copy.');}};
+ const send=n=>{if(sent.includes(n))return;setSent([...sent,n]);A.toast('Shared with '+n);};
+ return html`<${Modal} title="Share opportunity" onClose=${A.closeModal}>
+  <div className="person"><${OrgLogo} org=${o.org} size=${44}/><div className="nm">${o.title}<small style=${{display:'block',color:'var(--fg-3)',fontWeight:400}}>${ORGS[o.org].name}</small></div></div>
+  <div style=${{display:'flex',gap:8}}><input ref=${ref} readOnly value=${url} aria-label="Opportunity link" style=${{flex:1,minHeight:44,borderRadius:12,border:'1.5px solid var(--line)',background:'var(--surface-2)',padding:'0 12px',minWidth:0}}/><button className="btn btn-primary" onClick=${copy}><${Icon} name="copy" size=${18}/>Copy</button></div>
+  <div><b style=${{fontSize:14}}>Send to classmates</b>${['Jordan Davis','Maya Johnson','Chris Okafor','BME Student Org GroupMe'].map(n=>html`<div key=${n} className="person" style=${{padding:'8px 0'}}><span className="avatar" style=${{width:38,height:38,background:'var(--surface-2)',color:'var(--fg-2)'}}>${n[0]}</span><span className="nm">${n}</span><button className=${cx('btn btn-sm',sent.includes(n)?'btn-line on':'btn-primary')} onClick=${()=>send(n)}>${sent.includes(n)?'Sent':'Send'}</button></div>`)}</div>
+  <div className="chips">${['GroupMe','Outlook','LinkedIn'].map(c=>html`<${Chip} key=${c} onClick=${()=>A.toast('Shared to '+c+' (simulated)')}>${c}<//>`)}</div><//>`;}
+function ApplyModal({o}){const A=useContext(Ctx);const job=o.kind!=='event';
+ const done=()=>{if(job){if(!A.isSaved(o.id))A.set(s=>({saved:[...s.saved,{id:o.id,status:'Saved'}]}));A.set(s=>({saved:s.saved.map(x=>x.id===o.id?{...x,status:'Applied'}:x),modal:null}));A.toast('Marked as Applied in Saved');}
+  else{if(!A.isInterested(o.id))A.set(s=>({interested:[...s.interested,o.id]}));if(!A.onCal(o.id))A.addToCal(o.id);A.set({modal:null});}};
+ return html`<${Modal} title=${job?'Apply on the employer site':'Register for this event'} onClose=${A.closeModal}>
+  <div className="linkbox"><${Icon} name="link" size=${18}/>${o.link}</div>
+  <p style=${{color:'var(--fg-2)'}}>In the real product this opens the ${job?'application':'registration'} page in a new tab. In this prototype the link is simulated.</p>
+  <button className="btn btn-gold btn-block" onClick=${()=>{A.toast('Link opened (simulated)');}}>Open link (simulated)<${Icon} name="ext" size=${18}/></button>
+  <button className="btn btn-line btn-block" onClick=${done}>${job?'I applied. Mark as Applied':'I registered. Add to my calendar'}</button><//>`;}
+
+/* ---------- saved ---------- */
+const STATUSES=['Saved','Planning to Apply','Applied'];
+function Saved(){const A=useContext(Ctx);const {S}=A;const [tab,setTab]=useState('All');
+ const rows=S.saved.map(x=>({...x,o:byId(S.opps,x.id)})).filter(x=>x.o).sort((a,b)=>pd(a.o.date)-pd(b.o.date));
+ const shown=tab==='All'?rows:rows.filter(r=>r.status===tab);
+ return html`<div className="page mid"><h1 style=${{fontSize:24}}>Saved</h1><p style=${{color:'var(--fg-2)',marginTop:4}}>Your bookmarked opportunities, soonest deadline first.</p>
+  <div className="tabs" role="tablist">${['All',...STATUSES].map(t=>html`<${Chip} key=${t} on=${tab===t} onClick=${()=>setTab(t)}>${t} (${t==='All'?rows.length:rows.filter(r=>r.status===t).length})<//>`)}</div>
+  ${shown.length?shown.map(({o,status})=>{const d=dayDiff(o.date);const job=o.kind!=='event';const cal=A.onCal(o.id);
+   return html`<article key=${o.id} className=${cx('srow card',S.justSaved===o.id&&'fresh')}>
+    <div className="thumb"><${Art} o=${o}/></div>
+    <div><div style=${{color:'var(--fg-3)',fontSize:13,fontWeight:600}}>${ORGS[o.org].name}</div>
+     <h3 onClick=${()=>A.nav('opp',o.id)}>${o.title}</h3>
+     <div className="chips"><span className="pill">${o.badge||o.cat}</span><span className=${cx('pill',d>=0&&d<=14?'warn':'plain')}><${Icon} name="clock" size=${13}/>${o.dateKind==='Deadline'?'Closes ':''}${fmt(o.date)} · ${rel(d)}</span>${S.justSaved===o.id?html`<span className="pill gold">Just saved</span>`:null}</div></div>
+    <div className="bot">
+     ${job?html`<div className="seg" role="group" aria-label="Status">${STATUSES.map(s=>html`<button key=${s} className=${status===s?'on':''} aria-pressed=${status===s} onClick=${()=>A.setStatus(o.id,s)}>${s}</button>`)}</div>`:html`<span className="pill plain">Event</span>`}
+     <div style=${{display:'flex',gap:6,flexWrap:'wrap'}}>
+      <button className="btn btn-sm btn-line" onClick=${()=>A.nav('opp',o.id)}>Open</button>
+      <button className=${cx('btn btn-sm btn-line',cal&&'on')} onClick=${()=>A.addToCal(o.id)}><${Icon} name=${cal?'check':'calendar'} size=${16}/>${cal?'On calendar':'Add to calendar'}</button>
+      <button className="btn btn-sm btn-line" aria-label=${'Remove '+o.title+' from Saved'} onClick=${()=>A.toggleSave(o.id)}><${Icon} name="trash" size=${16}/>Remove</button></div></div></article>`;})
+   :html`<div className="empty card"><${Icon} name="bookmark" size=${32}/><h3>${rows.length?'Nothing in this status':'Nothing saved yet'}</h3><p>Tap the bookmark on any opportunity and it shows up here.</p><button className="btn btn-primary" onClick=${()=>A.nav('explore')}>Explore opportunities</button></div>`}
+ </div>`;}
+
+/* ---------- calendar ---------- */
+function monthCells(y,m){const f=new Date(y,m,1,12);const st=new Date(y,m,1-f.getDay(),12);
+ return Array.from({length:42},(_,i)=>{const d=new Date(st.getFullYear(),st.getMonth(),st.getDate()+i,12);return{iso:iso(d),day:d.getDate(),inMonth:d.getMonth()===m};});}
+function remindersFor(cal,opps){const out=[];
+ cal.slice().sort((a,b)=>pd(a.date)-pd(b.date)).forEach(e=>{const d=dayDiff(e.date);if(d<0)return;const o=e.oppId?byId(opps,e.oppId):null;
+  if(e.kind==='event'&&d<=1)out.push({id:e.id,oppId:e.oppId,text:'Your '+e.title+' is '+(d===0?'today':'tomorrow')+(e.time?' at '+e.time.split(' – ')[0]:'')+'.'});
+  else if(e.kind==='deadline'&&d<=14)out.push({id:e.id,oppId:e.oppId,text:'Your saved '+(o&&o.cat==='Internships'?'internship':'application')+' deadline is approaching: '+e.title+' closes '+(d===0?'today':'in '+d+' days')+'.'});
+  else if(e.kind==='reminder'&&d<=7)out.push({id:e.id,oppId:null,text:'Reminder: '+e.title+' ('+fmtLong(e.date)+').'});});
+ return out;}
+function CalendarPage(){const A=useContext(Ctx);const {S}=A;const v=S.calView;const setV=p=>A.set(s=>({calView:{...s.calView,...p}}));
+ const cells=monthCells(v.y,v.m);const byDate={};S.cal.forEach(e=>{(byDate[e.date]=byDate[e.date]||[]).push(e);});
+ const todayIso=iso(TODAY);const shift=n=>{const d=new Date(v.y,v.m+n,1,12);setV({y:d.getFullYear(),m:d.getMonth()});};
+ const upcoming=S.cal.filter(e=>dayDiff(e.date)>=0).sort((a,b)=>pd(a.date)-pd(b.date));
+ const rem=remindersFor(S.cal,S.opps);const dayEv=byDate[v.sel]||[];
+ const savedNot=S.saved.map(x=>byId(S.opps,x.id)).filter(o=>o&&dayDiff(o.date)>=0&&!A.onCal(o.id));
+ const Row=({e})=>{const d=pd(e.date);return html`<div className=${cx('ev',e.kind,S.justAdded===e.id&&'fresh')}><div className="dt"><small>${MON[d.getMonth()]}</small>${d.getDate()}</div>
+  <div className="tx"><b>${e.title}</b><small>${e.kind==='deadline'?'Application deadline':e.kind==='reminder'?'Reminder':'Event'}${e.time?' · '+e.time:''} · ${rel(dayDiff(e.date))}</small></div>
+  ${e.oppId?html`<button className="btn btn-sm btn-line" onClick=${()=>A.nav('opp',e.oppId)}>Open</button>`:null}</div>`;};
+ return html`<div className="page wide"><div style=${{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,marginBottom:14}}><h1 style=${{fontSize:24}}>Calendar</h1>
+  <button className="btn btn-primary btn-sm" onClick=${()=>A.set({modal:{type:'addEvent'}})}><${Icon} name="plusc" size=${18}/>Add event</button></div>
+  <div className="cal-grid"><div>
+   <div className="card cal"><div className="cal-h"><button className="icon-btn" aria-label="Previous month" onClick=${()=>shift(-1)}><${Icon} name="left"/></button><h2>${MONL[v.m]} ${v.y}</h2><button className="icon-btn" aria-label="Next month" onClick=${()=>shift(1)}><${Icon} name="right"/></button></div>
+    <div className="dow">${DOW.map(d=>html`<span key=${d}>${d}</span>`)}</div>
+    <div className="days">${cells.map(c=>{const ev=byDate[c.iso]||[];return html`<button key=${c.iso} className=${cx('day',!c.inMonth&&'out',c.iso===todayIso&&'today',c.iso===v.sel&&'sel')} onClick=${()=>setV({sel:c.iso})} aria-label=${fmtLong(c.iso)+(ev.length?', '+ev.length+' items':'')}>${c.day}<span className="dots">${ev.slice(0,3).map((e,i)=>html`<i key=${i} className=${e.kind==='deadline'?'d':e.kind==='reminder'?'r':''}></i>`)}</span></button>`;})}</div>
+    <div className="legend"><span><i></i>Event</span><span><i className="d"></i>Deadline</span><span><i className="r"></i>Reminder</span></div></div>
+   <div className="card panel" style=${{marginTop:14}}><h2>${fmtLong(v.sel)}</h2>
+    ${dayEv.length?dayEv.map(e=>html`<${Row} key=${e.id} e=${e}/>`):html`<p style=${{color:'var(--fg-3)'}}>Nothing on this day.</p>`}</div></div>
+  <div>
+   <div className="card panel"><h2><${Icon} name="bell" size=${18}/>Reminders</h2>${rem.length?rem.map(r=>html`<button key=${r.id} className="rem" onClick=${()=>r.oppId&&A.nav('opp',r.oppId)}><${Icon} name="bell" size=${18}/>${r.text}</button>`):html`<p style=${{color:'var(--fg-3)'}}>No reminders right now.</p>`}</div>
+   <div className="card panel"><h2><${Icon} name="calendar" size=${18}/>Upcoming</h2>${upcoming.length?upcoming.map(e=>html`<${Row} key=${e.id} e=${e}/>`):html`<p style=${{color:'var(--fg-3)'}}>No upcoming items.</p>`}</div>
+   ${savedNot.length?html`<div className="card panel"><h2><${Icon} name="bookmark" size=${18}/>Saved, not on your calendar</h2>${savedNot.map(o=>html`<div key=${o.id} className="ev"><div className="tx"><b>${o.title}</b><small>${o.dateKind==='Deadline'?'Closes ':''}${fmt(o.date)}</small></div><button className="btn btn-sm btn-primary" onClick=${()=>A.addToCal(o.id)}>Add</button></div>`)}</div>`:null}
+  </div></div></div>`;}
+function AddEvent(){const A=useContext(Ctx);const [title,setTitle]=useState('');const [date,setDate]=useState(iso(new Date(2026,10,25,12)));const [kind,setKind]=useState('event');const [time,setTime]=useState('');const [err,setErr]=useState('');
+ const save=e=>{e.preventDefault();if(!title.trim()){setErr('Add a title so you can recognize it later.');return;}
+  const ev={id:'c'+Date.now(),title:title.trim(),date,time:time.trim()||null,kind,oppId:null};const d=pd(date);
+  A.set(s=>({cal:[...s.cal,ev],justAdded:ev.id,modal:null,calView:{y:d.getFullYear(),m:d.getMonth(),sel:date}}));A.toast('Added to your PantherConnect calendar');};
+ return html`<${Modal} title="Add to calendar" onClose=${A.closeModal}><form className="form" onSubmit=${save}>
+  <div className=${cx('field',err&&'bad')}><label htmlFor="ae-t">Title</label><input id="ae-t" value=${title} onChange=${e=>setTitle(e.target.value)} placeholder="Gulf Coast Thermal application due"/>${err?html`<span className="err" role="alert">${err}</span>`:null}</div>
+  <div className="two"><div className="field"><label htmlFor="ae-d">Date</label><input id="ae-d" type="date" value=${date} onChange=${e=>setDate(e.target.value)}/></div>
+   <div className="field"><label htmlFor="ae-k">Type</label><select id="ae-k" value=${kind} onChange=${e=>setKind(e.target.value)}><option value="event">Event</option><option value="deadline">Deadline</option><option value="reminder">Reminder</option></select></div></div>
+  <div className="field"><label htmlFor="ae-ti">Time (optional)</label><input id="ae-ti" value=${time} onChange=${e=>setTime(e.target.value)} placeholder="2:00 PM"/></div>
+  <button className="btn btn-primary btn-block">Add to calendar</button></form><//>`;}
+
+/* ---------- notifications ---------- */
+function Notifications(){const A=useContext(Ctx);const {notifs}=A.S;const un=notifs.filter(n=>!n.read);const rd=notifs.filter(n=>n.read);
+ const List=({items})=>html`<div className="card list">${items.map(n=>html`<button key=${n.id} className="nrow" onClick=${()=>A.openNotif(n)}><span className="nic"><${Icon} name=${NIC[n.type]} size=${20}/></span><span className="tx">${n.text}<br/><small>${n.when}</small></span>${!n.read?html`<span className="unread" aria-label="Unread"></span>`:null}</button>`)}</div>`;
+ return html`<div className="page mid"><div style=${{display:'flex',justifyContent:'space-between',alignItems:'center'}}><h1 style=${{fontSize:24}}>Notifications</h1>
+  ${un.length?html`<button className="btn btn-sm btn-line" onClick=${()=>{A.set(s=>({notifs:s.notifs.map(n=>({...n,read:true}))}));A.toast('All caught up');}}>Mark all as read</button>`:null}</div>
+  ${un.length?html`<div className="sec-t">New</div><${List} items=${un}/>`:null}
+  ${rd.length?html`<div className="sec-t">Earlier</div><${List} items=${rd}/>`:null}</div>`;}
+
+/* ---------- profile ---------- */
+function MiniTile({o}){const A=useContext(Ctx);return html`<div className="tile" role="button" tabIndex="0" aria-label=${'Open '+o.title} onClick=${()=>A.nav('opp',o.id)} onKeyDown=${e=>{if(e.key==='Enter'){A.nav('opp',o.id);}}}><${Art} o=${o}/>${o.postedDays===0?html`<span className="tl pill gold">New</span>`:null}<span className="shade"><b>${o.title}</b><small>${ORGS[o.org].name}</small></span></div>`;}
+function Profile(){const A=useContext(Ctx);const {S}=A;const p=S.profile;
+ if(S.acct==='org'){const posts=S.opps.filter(o=>o.org==='bme');
+  return html`<div className="page mid"><div className="prof-h"><${OrgLogo} org="bme" size=${88} ring=${true}/><div style=${{flex:1,minWidth:200}}><h1>Biomedical Engineering Student Organization</h1><div className="sub">Student organization · Prairie View A&M University</div>
+   <div className="stats"><span><b>${posts.length}</b>posts</span><span><b>142</b>followers</span><span><b>12</b>following</span></div></div></div>
+   <p style=${{color:'var(--fg-2)',marginBottom:14}}>Professional development, research, and community for BME and ME students. You are posting as this organization.</p>
+   <div className="d-acts"><button className="btn btn-gold" onClick=${()=>A.nav('create')}><${Icon} name="plusc" size=${18}/>Create post</button><button className="btn btn-line" onClick=${()=>A.switchAcct('student')}><${Icon} name="swap" size=${18}/>Switch to ${p.first}</button></div>
+   <div className="sec-t">Posts</div><div className="tiles">${posts.map(o=>html`<${MiniTile} key=${o.id} o=${o}/>`)}</div></div>`;}
+ const reposts=S.reposts.map(id=>byId(S.opps,id)).filter(Boolean);
+ return html`<div className="page mid"><div className="prof-h"><${Avatar} src=${p.photo} size=${88} ring=${true}/><div style=${{flex:1,minWidth:200}}><h1>${p.name}</h1><div className="sub">${p.major} · ${p.classif} · Class of ${p.gradYear}</div>
+   <div className="stats"><span><b>${reposts.length}</b>reposts</span><span><b>${S.saved.length}</b>saved</span><span><b>${S.followed.length}</b>following</span></div></div>
+   <button className="btn btn-line" onClick=${()=>A.set({modal:{type:'edit'}})}><${Icon} name="edit" size=${18}/>Edit profile</button></div>
+  <button className="card" style=${{display:'flex',alignItems:'center',gap:12,padding:'12px 14px',width:'100%',textAlign:'left'}} onClick=${()=>A.switchAcct('org')}><${OrgLogo} org="bme" size=${40}/><span style=${{flex:1}}><b style=${{display:'block'}}>President, Biomedical Engineering Student Organization</b><small style=${{color:'var(--fg-3)'}}>Switch to the organization account to post opportunities</small></span><${Icon} name="swap" size=${18}/></button>
+  <div className="sec-t">Interests</div><div className="chips">${p.interests.map(i=>html`<span key=${i} className="pill">${i}</span>`)}${p.careers.map(i=>html`<span key=${i} className="pill gold">${i}</span>`)}</div>
+  <div className="sec-t">Reposted opportunities</div>
+  ${reposts.length?html`<div className="tiles">${reposts.map(o=>html`<${MiniTile} key=${o.id} o=${o}/>`)}</div>`:html`<div className="empty card"><${Icon} name="repeat" size=${30}/><h3>No reposts yet</h3><p>Repost an opportunity to share it with people who follow you.</p></div>`}
+  <div style=${{marginTop:24}}><button className="btn btn-line" onClick=${A.reset}>Sign out and reset demo</button></div></div>`;}
+function EditProfile(){const A=useContext(Ctx);const [p,setP]=useState({...A.S.profile});const up=x=>setP(s=>({...s,...x}));const tog=(k,v)=>up({[k]:p[k].includes(v)?p[k].filter(x=>x!==v):[...p[k],v]});
+ const photo=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(f.size>4e6){A.toast('Choose an image under 4 MB');return;}const r=new FileReader();r.onload=()=>up({photo:r.result});r.readAsDataURL(f);};
+ return html`<${Modal} title="Edit profile" wide=${true} onClose=${A.closeModal}><div className="form">
+  <div style=${{display:'flex',alignItems:'center',gap:14}}><${Avatar} src=${p.photo} size=${64}/><label className="btn btn-line btn-sm" htmlFor="ph" style=${{cursor:'pointer'}}><${Icon} name="image" size=${16}/>Change photo</label><input id="ph" type="file" accept="image/*" onChange=${photo} className="sr-only"/></div>
+  <div className="two"><div className="field"><label htmlFor="ep-m">Major</label><select id="ep-m" value=${p.major} onChange=${e=>up({major:e.target.value})}>${[...MAJORS,'Other'].map(m=>html`<option key=${m}>${m}</option>`)}</select></div>
+   <div className="field"><label htmlFor="ep-g">Graduation year</label><select id="ep-g" value=${p.gradYear} onChange=${e=>up({gradYear:e.target.value})}>${['2026','2027','2028','2029','2030'].map(y=>html`<option key=${y}>${y}</option>`)}</select></div></div>
+  <div className="field"><label htmlFor="ep-c">Classification</label><select id="ep-c" value=${p.classif} onChange=${e=>up({classif:e.target.value})}>${CLASSES.map(c=>html`<option key=${c}>${c}</option>`)}</select></div>
+  <div className="group"><h3>Interests</h3><div className="chips">${INTERESTS.map(i=>html`<${Chip} key=${i} on=${p.interests.includes(i)} onClick=${()=>tog('interests',i)}>${i}<//>`)}</div></div>
+  <div className="group"><h3>Career interests</h3><div className="chips">${CAREERS.map(([c])=>html`<${Chip} key=${c} on=${p.careers.includes(c)} onClick=${()=>tog('careers',c)}>${c}<//>`)}</div></div>
+  <button className="btn btn-primary btn-block" onClick=${()=>{A.set({profile:p,modal:null,homeCount:6});A.toast('Profile updated. Your feed was refreshed.');}}>Save changes</button></div><//>`;}
+
+/* ---------- create ---------- */
+function Create(){const A=useContext(Ctx);const {S}=A;const d=S.draft;
+ if(S.acct!=='org')return html`<div className="page mid"><div className="card lockbox"><span className="big"><${Icon} name="lock" size=${30}/></span><h1 style=${{fontSize:22}}>Posting is for authorized organizations</h1>
+  <p style=${{color:'var(--fg-2)',maxWidth:420}}>Student accounts can browse, save, and repost. To publish an opportunity, switch to an organization account you are authorized to manage.</p>
+  <button className="btn btn-gold" onClick=${()=>A.switchAcct('org')}><${OrgLogo} org="bme" size=${26}/>Switch to Biomedical Engineering Student Org</button></div></div>`;
+ if(S.pub)return html`<${Published}/>`;
+ return html`<div className="page mid"><h1 style=${{fontSize:24,marginBottom:4}}>Create opportunity</h1><p style=${{color:'var(--fg-2)',marginBottom:14,display:'flex',alignItems:'center',gap:8}}><${OrgLogo} org="bme" size=${24}/>Posting as Biomedical Engineering Student Organization</p>
+  <div className="steps"><span className=${cx('s',d.step===1&&'on')}><span className="n">1</span>Details</span><span className="bar"></span><span className=${cx('s',d.step===2&&'on')}><span className="n">2</span>Audience</span></div>
+  ${d.step===1?html`<${StepDetails}/>`:html`<${StepAudience}/>`}</div>`;}
+function StepDetails(){const A=useContext(Ctx);const d=A.S.draft;const up=x=>A.set(s=>({draft:{...s.draft,...x}}));const er=d.errors||{};
+ const file=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(!f.type.startsWith('image/')){A.toast('Choose an image file (PNG or JPG)');return;}if(f.size>6e6){A.toast('Choose an image under 6 MB');return;}
+  const r=new FileReader();r.onload=()=>up({flyer:{kind:'upload',src:r.result,name:f.name}});r.readAsDataURL(f);};
+ const next=()=>{const e={};if(!d.title.trim())e.title='Add an event title.';if(!d.date)e.date='Pick a date.';if(!d.loc.trim())e.loc='Add a location or "Virtual".';
+  if(Object.keys(e).length){up({errors:e});A.toast('Fill in the highlighted fields');return;}up({errors:{},step:2});window.scrollTo(0,0);};
+ const pv=draftToOpp(d,'preview');
+ return html`<div className="form">
+  <div className="drop"><div className="pv">${d.flyer?html`<${Art} o=${pv}/>`:html`<${Icon} name="image" size=${32}/>`}</div>
+   <div style=${{display:'grid',gap:8}}><b>${d.flyer?d.flyer.name||'Auto-designed flyer':'Event flyer'}</b><span style=${{color:'var(--fg-3)',fontSize:14}}>${d.flyer?'This is how your post will look.':'Upload a flyer, or we will design one from your title.'}</span>
+    <div className="btns"><label className="btn btn-primary btn-sm" htmlFor="fl" style=${{cursor:'pointer'}}><${Icon} name="upload" size=${16}/>${d.flyer?'Replace flyer':'Upload flyer'}</label><input id="fl" type="file" accept="image/*" className="sr-only" onChange=${file}/>
+     ${!d.flyer?html`<button className="btn btn-line btn-sm" onClick=${()=>up({flyer:{kind:'auto',name:'Auto-designed flyer'}})}>Design one for me</button>`:html`<button className="btn btn-line btn-sm" onClick=${()=>up({flyer:null})}>Remove</button>`}</div></div></div>
+  <div className=${cx('field',er.title&&'bad')}><label htmlFor="c-t">Event title</label><input id="c-t" value=${d.title} onChange=${e=>up({title:e.target.value})} placeholder="Engineering Resume and Interview Lab"/>${er.title?html`<span className="err" role="alert">${er.title}</span>`:null}</div>
+  <div className="field"><label htmlFor="c-d">Description</label><textarea id="c-d" value=${d.desc} maxLength="400" onChange=${e=>up({desc:e.target.value})} placeholder="What will students do, and what should they bring?"></textarea><span className="hint">${d.desc.length} / 400</span></div>
+  <div className="field"><label htmlFor="c-c">Category</label><select id="c-c" value=${d.cat} onChange=${e=>up({cat:e.target.value})}>${CATS.map(c=>html`<option key=${c}>${c}</option>`)}</select></div>
+  <div className="two"><div className=${cx('field',er.date&&'bad')}><label htmlFor="c-dt">Date</label><input id="c-dt" type="date" min=${iso(TODAY)} value=${d.date} onChange=${e=>up({date:e.target.value})}/>${er.date?html`<span className="err" role="alert">${er.date}</span>`:null}</div>
+   <div className="field"><label htmlFor="c-tm">Time</label><input id="c-tm" value=${d.time} onChange=${e=>up({time:e.target.value})} placeholder="6:00 PM – 7:30 PM"/></div></div>
+  <div className=${cx('field',er.loc&&'bad')}><label htmlFor="c-l">Location</label><input id="c-l" value=${d.loc} onChange=${e=>up({loc:e.target.value})} placeholder="Student Center, Room 214"/>${er.loc?html`<span className="err" role="alert">${er.loc}</span>`:null}</div>
+  <div className="field"><label htmlFor="c-r">Registration link</label><input id="c-r" type="url" value=${d.link} onChange=${e=>up({link:e.target.value})} placeholder="https://"/></div>
+  <button className="btn btn-primary btn-block" onClick=${next}>Next: choose audience<${Icon} name="arrow" size=${18}/></button></div>`;}
+function Group({title,opts,sel,onToggle,onClear}){return html`<div className="group"><h3>${title}<button onClick=${onClear}>${sel.length?'Clear':'Any'}</button></h3><div className="chips" role="group" aria-label=${title}>${opts.map(o=>html`<${Chip} key=${o} on=${sel.includes(o)} onClick=${()=>onToggle(o)}>${o}<//>`)}</div></div>`;}
+function StepAudience(){const A=useContext(Ctx);const d=A.S.draft;const up=x=>A.set(s=>({draft:{...s.draft,...x}}));
+ const tog=(k,v)=>up({[k]:d[k].includes(v)?d[k].filter(x=>x!==v):[...d[k],v]});const aud={majors:d.majors,classes:d.classes,interests:d.interests};
+ return html`<div className="form"><h2 style=${{fontSize:20}}>Who should see this post?</h2>
+  <${Group} title="Major" opts=${AUD_MAJ} sel=${d.majors} onToggle=${v=>tog('majors',v)} onClear=${()=>up({majors:[]})}/>
+  <${Group} title="Classification" opts=${CLASSES} sel=${d.classes} onToggle=${v=>tog('classes',v)} onClear=${()=>up({classes:[]})}/>
+  <${Group} title="Interests" opts=${AUD_INT} sel=${d.interests} onToggle=${v=>tog('interests',v)} onClear=${()=>up({interests:[]})}/>
+  <div className="summary" aria-live="polite"><${Icon} name="users" size=${22}/><div>${audSummary(aud,'event')}<small>Estimated reach (simulated): about ${reach(aud)} students. Leave a group on Any to include everyone.</small></div></div>
+  <div style=${{display:'flex',gap:10,flexWrap:'wrap'}}><button className="btn btn-line" onClick=${()=>up({step:1})}><${Icon} name="left" size=${18}/>Back</button>
+   <button className="btn btn-line" style=${{flex:1}} onClick=${()=>A.set({modal:{type:'preview'}})}><${Icon} name="eye" size=${18}/>Preview Post</button>
+   <button className="btn btn-gold" style=${{flex:1}} onClick=${()=>{A.publish();window.scrollTo(0,0);}}><${Icon} name="megaphone" size=${18}/>Publish</button></div></div>`;}
+function PreviewModal(){const A=useContext(Ctx);const o=draftToOpp(A.S.draft,'preview');
+ return html`<${Modal} title="Preview post" wide=${true} onClose=${A.closeModal}><p style=${{color:'var(--fg-2)'}}>This is how students will see your post in their feed.</p><${PostCard} o=${o} preview=${true}/>
+  <button className="btn btn-gold btn-block" onClick=${()=>{A.closeModal();A.publish();window.scrollTo(0,0);}}>Publish</button><//>`;}
+function Published(){const A=useContext(Ctx);const {pub}=A.S;const o=byId(A.S.opps,pub.id);const [st,setSt]=useState({v:0,s:0,i:0});
+ useEffect(()=>{const t=setInterval(()=>setSt(x=>({v:x.v+3+Math.floor(Math.random()*8),s:x.s+(Math.random()<.5?1:0),i:x.i+(Math.random()<.6?1:0)})),1500);return()=>clearInterval(t);},[]);
+ return html`<div className="page mid"><div className="card" style=${{padding:24,display:'grid',gap:16,textAlign:'center'}}>
+  <div className="okmark"><${Icon} name="check" size=${38}/></div><h1 style=${{fontSize:24}}>Published!</h1>
+  <p style=${{color:'var(--fg-2)'}}>${o.title} is on the Biomedical Engineering Student Org profile and in Explore. Matching students now see it in their feeds.</p>
+  <div className="card reach"><div className="num">${pub.reach}</div><div style=${{fontWeight:700}}>students recommended this post</div><small style=${{color:'var(--fg-3)'}}>Estimated and simulated. ${audSummary(o.audience,'event')}</small></div>
+  <div className="mini"><div><b>${st.v}</b><small>Views</small></div><div><b>${st.s}</b><small>Saves</small></div><div><b>${st.i}</b><small>Interested</small></div></div>
+  <div style=${{display:'flex',gap:10,flexWrap:'wrap',justifyContent:'center'}}><button className="btn btn-primary" onClick=${()=>A.nav('opp',o.id)}>View post</button>
+   <button className="btn btn-line" onClick=${()=>{A.set({explore:{q:o.title,cat:'All',major:'Any',deadline:'Any',interest:'Any',loc:'Any'}});A.nav('explore');}}>See it in Explore</button>
+   <button className="btn btn-line" onClick=${()=>A.nav('profile')}>Organization profile</button>
+   <button className="btn btn-line" onClick=${()=>A.set({pub:null,draft:blankDraft()})}>Create another</button></div></div></div>`;}
+
+window.__PC={OPPS,score,feedFor,runSearch,audMatch,reach,audSummary,draftToOpp,initial,remindersFor,dayDiff};
+ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);
+})();
+</script>
+
+</body></html>
